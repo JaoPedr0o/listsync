@@ -23,13 +23,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     padding: 16,
-    shadowColor: '#000',
+    shadowColor: '#FFF',
     shadowOffset: {
-      height: 2,
+      height: 1,
       width: 0,
     },
     shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowRadius: 6.84,
   },
   buttonText: {
     color: '#FFFFFF',

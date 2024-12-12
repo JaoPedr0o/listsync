@@ -1,11 +1,14 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import Item from 'screens/item';
 
 import DrawerNavigator from './drawer-navigator';
 import Modal from '../screens/modal';
+import Avatar from 'components/Avatar';
 
 export type RootStackParamList = {
   DrawerNavigator: undefined;
+  Item: undefined;
   Modal: undefined;
   TabNavigator: undefined;
 };
@@ -20,6 +23,16 @@ export default function RootStack() {
           name="DrawerNavigator"
           component={DrawerNavigator}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Item"
+          component={Item}
+          options={{
+            headerShown: true,
+            headerStyle: { shadowColor: '#FFFFFF' },
+            headerTitleStyle: { fontSize: 20, fontWeight: 'bold' },
+            headerRight: () => <Avatar></Avatar>
+          }}
         />
         <Stack.Screen
           name="Modal"

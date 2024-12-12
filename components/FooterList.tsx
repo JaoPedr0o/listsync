@@ -1,7 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { StyleSheet, Switch, Text, View } from 'react-native';
+import { faTrash, faFilePdf, faShareNodes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { Button } from './Button';
+import CustomSwitch from './SwitchCustom';
 
 type FooterListProps = {
   items?: number;
@@ -18,8 +21,16 @@ export default function FooterList(props: FooterListProps) {
             {props.enable ? <Text style={styles.ActiveText}>● ATIVA</Text> : <Text style={styles.InativeText}>● INATIVA</Text>}
             <Text style={styles.SmalltextBold}>{props.items ? props.items : "0"} itens</Text>
           </View>
-          <Button title="APAGAR LISTA" />
-          <Switch trackColor={{false: '#BF6259', true: '#59BF69'}} style={styles.Switch}/>
+          <TouchableOpacity style={styles.ActionButton}>
+            <FontAwesomeIcon color="#FFFFFF" size={20} icon={faTrash} />  
+          </TouchableOpacity> 
+          <TouchableOpacity style={styles.ActionButton}>
+            <FontAwesomeIcon color="#FFFFFF" size={20} icon={faFilePdf} />  
+          </TouchableOpacity> 
+          <TouchableOpacity style={styles.ActionButton}>
+            <FontAwesomeIcon color="#FFFFFF" size={20} icon={faShareNodes} />  
+          </TouchableOpacity> 
+          <CustomSwitch isActive={props.enable}/>
         </View> 
       : 
         <Button title="NOVA LISTA" />}
@@ -30,13 +41,13 @@ export default function FooterList(props: FooterListProps) {
 const styles = StyleSheet.create({
   Container: {
     justifyContent: 'center',
-    paddingLeft: 10,
-    paddingRight: 10,
-    position: 'absolute',
+    paddingLeft: 15,
+    paddingRight: 15,
     width: '100%',
     bottom: 0,
     height: 80,
     borderTopLeftRadius: 20,
+    backgroundColor: '#FFFFFF',
     borderTopRightRadius: 20,
     boxShadow: '#00000001 0px 1px 3px 0px, #878787 0px 0px 1px 0px',
   },
@@ -49,25 +60,21 @@ const styles = StyleSheet.create({
   },
 
   WrapperText: {
-    width: 80,
+    width: 70,
     justifyContent: 'center',
-    gap: 5,
-  },
-
-  Switch: {
-    height: 60,
+    gap: 1,
   },
 
   ActiveText: {
     color: "#59BF69",
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 16,
   },
 
   InativeText: {
     color: "#BF6259",
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 16,
   },
 
   TextBold: {
@@ -77,7 +84,7 @@ const styles = StyleSheet.create({
   },
 
   SmalltextBold: {
-    fontSize: 14,
+    fontSize: 16,
     color: 'black',
     fontWeight: 'bold',
   },
@@ -86,5 +93,23 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#878787',
     fontWeight: 'bold',
+  },
+
+  ActionButton: {
+    alignItems: 'center',
+    backgroundColor: '#000000',
+    borderRadius: 24,
+    elevation: 5,
+    height: 40,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    padding: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      height: 2,
+      width: 0,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
 });

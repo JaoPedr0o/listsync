@@ -1,15 +1,15 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-type ListCardProps = {
+export type ListCardProps = {
   Description: string;
+  onPress: () => void;
 };
 
 export default function ListCard(props: ListCardProps) {
   return (
-    <TouchableOpacity style={styles.Container}>
+    <TouchableOpacity style={styles.Container} onPress={props.onPress}>
       <View style={styles.Image} />
       <Text style={styles.TextBold}>{props.Description}</Text>
-      <View style={styles.Circle} />
     </TouchableOpacity>
   );
 }
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   Container: {
     position: 'relative',
     height: 90,
-    width: '100%',
+    width: '99%',
     backgroundColor: '#E0E4EA',
     borderRadius: 20,
     boxShadow: '#00000001 0px 1px 3px 0px, #000000 0px 0px 1px 0px',
@@ -26,8 +26,9 @@ const styles = StyleSheet.create({
     paddingLeft: 14,
     alignItems: 'center',
     gap: 20,
-    marginTop: 7.5,
-    marginBottom: 7.5,
+    marginBottom: 15,
+    marginTop: 0.5,
+    marginLeft: 0.5,
   },
 
   TextBold: {
@@ -41,17 +42,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#878787',
     fontWeight: 'bold',
-  },
-
-  Circle: {
-    position: 'absolute',
-    top: 32,
-    right: -12,
-    height: 30,
-    width: 30,
-    backgroundColor: '#FFFFFF',
-    borderRadius: '50%',
-    zIndex: 5,
   },
 
   Image: {
