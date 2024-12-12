@@ -18,7 +18,7 @@ export default function FooterList(props: FooterListProps) {
       {props.isListItems ? 
         <View style={styles.WrapperFooterItemList}>
           <View style={styles.WrapperText}>
-            {props.enable ? <Text style={styles.ActiveText}>● ATIVA</Text> : <Text style={styles.InativeText}>● INATIVA</Text>}
+            {props.enable ? <Text style={styles.ActiveText}>ATIVA</Text> : <Text style={styles.InativeText}>INATIVA</Text>}
             <Text style={styles.SmalltextBold}>{props.items ? props.items : "0"} itens</Text>
           </View>
           <TouchableOpacity style={styles.ActionButton}>
