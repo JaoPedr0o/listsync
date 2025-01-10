@@ -1,6 +1,6 @@
 {
   "cesVersion": "2.12.1",
-  "projectName": "listsync",
+  "projectName": "Listsync",
   "packages": [
     {
       "name": "react-navigation",

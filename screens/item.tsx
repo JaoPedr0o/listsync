@@ -9,43 +9,43 @@ export default function Item({ navigation }: { navigation: any }) {
   const mockData = [
     {
       id: '1',
-      Description: 'Bebel de bebezinho.',
+      Description: 'Item 1.',
     },
     {
       id: '2',
-      Description: 'De nenenzinho.',
+      Description: 'Item 2.',
     },
     {
       id: '3',
-      Description: 'Bebel de bebezinho.',
+      Description: 'Item 3.',
     },
     {
       id: '4',
-      Description: 'De nenenzinho.',
+      Description: 'Item 4.',
     },
     {
       id: '5',
-      Description: 'Bebel de bebezinho.',
+      Description: 'Item 5.',
     },
     {
       id: '6',
-      Description: 'De nenenzinho.',
+      Description: 'Item 6.',
     },
     {
       id: '7',
-      Description: 'Bebel de bebezinho.',
+      Description: 'Item 7.',
     },
     {
       id: '8',
-      Description: 'De nenenzinho.',
+      Description: 'Item 8.',
     },
     {
       id: '9',
-      Description: 'Bebel de bebezinho.',
+      Description: 'Item 9.',
     },
     {
       id: '10',
-      Description: 'De nenenzinho.',
+      Description: 'Item 10.',
     },
   ];
 
@@ -54,15 +54,15 @@ export default function Item({ navigation }: { navigation: any }) {
       <View style={styles.Container}>
         <AddListItem />
         <SafeAreaProvider>
-          {navigation.setOptions({
+          {/* {navigation.setOptions({
             title: `Sua lista de compras agora na palma da mão.`,
-          })}
+          })} */}
           <FlatList
             showsVerticalScrollIndicator={false}
             data={mockData}
             renderItem={({ item }) => (
               <ItemCard
-                Quantity={34}
+                Quantity={0}
                 onPress={() => navigation.navigate('Item')}
                 Description={item.Description}
               />

@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     height: 65,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    gap: 5,
   },
 
   TextBold: {
@@ -60,8 +61,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingLeft: 20,
     paddingRight: 10,
-    width: 165,
+    maxWidth: 200,
+    minWidth: 160,
     fontWeight: 'bold',
+    flex: 1,
   },
 
   Input: {
@@ -73,9 +76,10 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderBottomLeftRadius: 20,
     color: '#878787',
-    fontSize: 14,
+    fontSize: 12,
     width: 75,
     fontWeight: 'bold',
+    flex: 1,
   },
 
   ListTypeButton: {
@@ -99,5 +103,6 @@ const styles = StyleSheet.create({
 
   WrapperType: {
     flexDirection: 'row',
+    flex: 1,
   },
 });
