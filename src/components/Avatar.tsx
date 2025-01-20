@@ -1,5 +1,6 @@
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function Avatar() {

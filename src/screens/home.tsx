@@ -1,9 +1,10 @@
-import FooterList from 'components/FooterList';
-import HeaderContentInfo from 'components/HeaderContentInfo';
-import ListCard from 'components/ListCard';
 import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+
+import FooterList from '~/components/FooterList';
+import ListCard from '~/components/ListCard';
+import HeaderContentInfo from '~/components/headerContentInfo';
 
 export default function Home({ navigation }: { navigation: any }) {
   const mockData = [

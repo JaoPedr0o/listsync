@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { faTrash, faFilePdf, faShareNodes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { Button } from './Button';

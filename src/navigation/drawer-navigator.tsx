@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StackScreenProps } from '@react-navigation/stack';
-import Avatar from 'components/Avatar';
+import Avatar from '~/components/Avatar';
 
 import { RootStackParamList } from '.';
 import Home from '../screens/home';

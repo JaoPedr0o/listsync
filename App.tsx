@@ -1,8 +1,8 @@
 import 'react-native-gesture-handler';
 import * as NavigationBar from 'expo-navigation-bar';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
-import RootStack from './navigation';
+import RootStack from './src/navigation';
 
 export default function App() {
   useEffect(() => {

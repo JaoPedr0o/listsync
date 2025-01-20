@@ -1,9 +1,10 @@
-import AddListItem from 'components/AddListItem';
-import FooterList from 'components/FooterList';
-import ItemCard from 'components/ItemCard';
 import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+
+import AddListItem from '~/components/AddListItem';
+import FooterList from '~/components/FooterList';
+import ItemCard from '~/components/ItemCard';
 
 export default function Item({ navigation }: { navigation: any }) {
   const mockData = [

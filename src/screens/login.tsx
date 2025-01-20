@@ -1,14 +1,15 @@
-import { Button } from 'components/Button';
-import { ButtonInlined } from 'components/ButtonInlined';
 import React from 'react';
-import { View, StyleSheet, Text, Image, TextInput, ImageBackground } from 'react-native';
+import { View, StyleSheet, Text, TextInput, ImageBackground } from 'react-native';
 
-export default function Login({ navigation }: { navigation: any }) {
+import { Button } from '~/components/Button';
+import { ButtonInlined } from '~/components/ButtonInlined';
+
+export default function Register({ navigation }: { navigation: any }) {
   return (
     <View style={styles.mainContainer}>
       <View>
-        <ImageBackground style={styles.LogoImage} source={require('../src/assets/logo.png')} />
-        <Text style={styles.LargeTextBlack}>OLÁ!</Text>
+        <ImageBackground style={styles.LogoImage} source={require('../assets/logo.png')} />
+        <Text style={styles.LargeTextBlack}>BEM VINDO!</Text>
         <Text style={styles.SmallTextBlack}>
           Entre em sua conta ou <Text style={styles.SmallTextGreen}>CLIQUE AQUI</Text> para
           continuar sem conta porém, esteja ciente de que não sera possível compartilhar suas listas
@@ -16,13 +17,12 @@ export default function Login({ navigation }: { navigation: any }) {
         </Text>
       </View>
       <View style={styles.FormInput}>
-        <TextInput style={styles.LoginInput} placeholderTextColor="#000" placeholder="Seu nome:" />
-        <TextInput style={styles.LoginInput} placeholderTextColor="#000" placeholder="E-mail:" />
+        <TextInput style={styles.LoginInput} placeholderTextColor="#000" placeholder="E-mail" />
         <TextInput style={styles.LoginInput} placeholderTextColor="#000" placeholder="Senha:" />
-        <TextInput style={styles.LoginInput} placeholderTextColor="#000" placeholder="Confirme sua Senha:" />
+        <Text style={styles.CenteredSmallTextBlack}>Esqueci minha Senha</Text>
         <Button title="ENTRAR" onPress={() => navigation.navigate('DrawerNavigator')} />
-        <Text style={styles.SmallTextPurple}>Já possui uma conta?</Text>
-        <ButtonInlined title="CRIAR CONTA" onPress={() => navigation.navigate('Register')} />
+        <Text style={styles.SmallTextPurple}>Ainda não possui uma conta?</Text>
+        <ButtonInlined title="CRIAR CONTA" onPress={() => navigation.navigate('Login')} />
       </View>
     </View>
   );
@@ -107,3 +107,6 @@ const styles = StyleSheet.create({
 
   WhiteButton: {},
 });
+function useState(arg0: string): [any, any] {
+  throw new Error('Function not implemented.');
+}

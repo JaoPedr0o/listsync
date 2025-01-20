@@ -1,12 +1,12 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Avatar from 'components/Avatar';
-import Item from 'screens/item';
-import Login from 'screens/login';
+import Avatar from '~/components/Avatar';
+import Item from '~/screens/item';
+import Login from '~/screens/register';
 
 import DrawerNavigator from './drawer-navigator';
 import Modal from '../screens/modal';
-import Register from 'screens/register';
+import Register from '~/screens/login';
 
 export type RootStackParamList = {
   DrawerNavigator: undefined;
