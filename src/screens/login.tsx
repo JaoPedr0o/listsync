@@ -1,10 +1,53 @@
-import React from 'react';
-import { View, StyleSheet, Text, TextInput, ImageBackground } from 'react-native';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import React, { useState } from 'react';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  ImageBackground,
+  ActivityIndicator,
+  Alert,
+} from 'react-native';
 
 import { Button } from '~/components/Button';
 import { ButtonInlined } from '~/components/ButtonInlined';
+import { auth } from '~/services/firebase';
 
-export default function Register({ navigation }: { navigation: any }) {
+export default function Login({ navigation }: { navigation: any }) {
+  const [password, setPassword] = useState('123456');
+  const [email, setEmail] = useState('joaopedromp15@outlook.com');
+  const [loading, setLoading] = useState(false);
+
+  // Função para validar os campos de login
+  function validateInputs() {
+    if (email.length === 0 || password.length === 0) {
+      Alert.alert('Preencha os campos!');
+      return false;
+    }
+    return true;
+  }
+
+  // Função para fazer login
+  function login() {
+    if (!validateInputs()) return;
+
+    setLoading(true);
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        setLoading(false);
+        setEmail('');
+        setPassword('');
+        navigation.navigate('PrivateRoutes');
+      })
+      .catch((error) => {
+        setLoading(false);
+        const errorMessage = error.message;
+        Alert.alert('Erro ao logar', errorMessage);
+      });
+  }
+
   return (
     <View style={styles.mainContainer}>
       <View>
@@ -12,15 +55,30 @@ export default function Register({ navigation }: { navigation: any }) {
         <Text style={styles.LargeTextBlack}>BEM VINDO!</Text>
         <Text style={styles.SmallTextBlack}>
           Entre em sua conta ou <Text style={styles.SmallTextGreen}>CLIQUE AQUI</Text> para
-          continuar sem conta porém, esteja ciente de que não sera possível compartilhar suas listas
-          nem mantê-las salvas em nuvem!{' '}
+          continuar sem conta, porém, esteja ciente de que não será possível compartilhar suas
+          listas nem mantê-las salvas em nuvem!{' '}
         </Text>
+        {loading && <ActivityIndicator color="#000" />}
       </View>
       <View style={styles.FormInput}>
-        <TextInput style={styles.LoginInput} placeholderTextColor="#000" placeholder="E-mail" />
-        <TextInput style={styles.LoginInput} placeholderTextColor="#000" placeholder="Senha:" />
+        <TextInput
+          style={styles.LoginInput}
+          placeholderTextColor="#000"
+          onChangeText={setEmail}
+          value={email}
+          placeholder="E-mail:"
+          keyboardType="email-address"
+        />
+        <TextInput
+          style={styles.LoginInput}
+          placeholderTextColor="#000"
+          onChangeText={setPassword}
+          value={password}
+          placeholder="Senha:"
+          secureTextEntry
+        />
         <Text style={styles.CenteredSmallTextBlack}>Esqueci minha Senha</Text>
-        <Button title="ENTRAR" onPress={() => navigation.navigate('DrawerNavigator')} />
+        <Button title="ENTRAR" onPress={login} />
         <Text style={styles.SmallTextPurple}>Ainda não possui uma conta?</Text>
         <ButtonInlined title="CRIAR CONTA" onPress={() => navigation.navigate('Login')} />
       </View>
@@ -36,15 +94,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     height: '100%',
     justifyContent: 'space-between',
-  },
-
-  Container: {
-    flex: 1,
-    padding: 15,
-    paddingBottom: 0,
-    paddingTop: 0,
-    backgroundColor: '#FFFFFF',
-    height: '100%',
   },
 
   LargeTextBlack: {
@@ -100,13 +149,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
   },
-
-  InfoContent: {
-    textAlign: 'center',
-  },
-
-  WhiteButton: {},
 });
-function useState(arg0: string): [any, any] {
-  throw new Error('Function not implemented.');
-}

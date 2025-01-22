@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
   },
 
   MainInput: {
-    boxShadow: '#00000001 0px 1px 3px 0px, #000000 0px 0px 1px 0px',
     backgroundColor: '#E0E4EA',
     height: 50,
     borderRadius: 20,
@@ -70,7 +69,6 @@ const styles = StyleSheet.create({
 
   Input: {
     backgroundColor: '#E0E4EA',
-    boxShadow: '#00000001 0px 1px 3px 0px, #000000 0px 0px 1px 0px',
     height: 50,
     paddingLeft: 20,
     paddingRight: 10,

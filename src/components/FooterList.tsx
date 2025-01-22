@@ -11,6 +11,7 @@ type FooterListProps = {
   items?: number;
   enable: boolean;
   isListItems: boolean;
+  onPress?: () => void;
 };
 
 export default function FooterList(props: FooterListProps) {
@@ -34,7 +35,7 @@ export default function FooterList(props: FooterListProps) {
           <CustomSwitch isActive={props.enable}/>
         </View> 
       : 
-        <Button title="NOVA LISTA" />}
+        <Button onPress={props.onPress} title="NOVA LISTA" />}
     </View>
   );
 }
@@ -47,6 +48,7 @@ const styles = StyleSheet.create({
     width: '100%',
     bottom: 0,
     height: 80,
+    zIndex: 40,
     borderTopLeftRadius: 20,
     backgroundColor: '#FFFFFF',
     borderTopRightRadius: 20,

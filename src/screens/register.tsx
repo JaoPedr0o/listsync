@@ -1,26 +1,83 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, TextInput, ImageBackground } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  ImageBackground,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
 
 import { Button } from '~/components/Button';
 import { ButtonInlined } from '~/components/ButtonInlined';
-import { auth } from '~/services/firebase';
+import { auth, db } from '~/services/firebase';
 
-export default function Login({ navigation }: { navigation: any }) {
-  const [email, setEmail] = useState('');
+export default function Register({ navigation }: { navigation: any }) {
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed up
-      const user = userCredential.user;
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-    });
+  // Função para validar os campos antes de tentar criar o usuário
+  function validateInputs() {
+    if (name.length === 0 || email.length === 0) {
+      Alert.alert('Preencha todos os campos!');
+      return false;
+    }
+
+    if (name.length <= 4) {
+      Alert.alert('Nome muito curto! O nome deve ter mais de 4 caracteres.');
+      return false;
+    }
+
+    if (password.length < 6) {
+      Alert.alert('A senha deve ter pelo menos 6 caracteres.');
+      return false;
+    }
+
+    if (confirmPassword !== password) {
+      Alert.alert('As senhas não batem!');
+      return false;
+    }
+
+    return true;
+  }
+
+  // Função para registrar o usuário
+  function register() {
+    if (!validateInputs()) return;
+
+    setLoading(true);
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(async (userCredential) => {
+        const user = userCredential.user;
+        await setDoc(doc(db, 'users', user.uid), {
+          displayName: name,
+          userEmail: email,
+          conections: [],
+          lists: [],
+          profileImg: '',
+        });
+
+        setLoading(false);
+        setEmail('');
+        setPassword('');
+        setName('');
+        setConfirmPassword('');
+
+        Alert.alert('Usuário cadastrado com sucesso!');
+        navigation.navigate('PrivateRoutes');
+      })
+      .catch((error) => {
+        setLoading(false);
+        Alert.alert('Erro ao criar conta', error.message);
+      });
+  }
 
   return (
     <View style={styles.mainContainer}>
@@ -28,18 +85,26 @@ export default function Login({ navigation }: { navigation: any }) {
         <ImageBackground style={styles.LogoImage} source={require('../assets/logo.png')} />
         <Text style={styles.LargeTextBlack}>OLÁ!</Text>
         <Text style={styles.SmallTextBlack}>
-          Coloque seus dados e comece agora mesmo a facilitar a seu dia a dia com essa ferramenta
+          Coloque seus dados e comece agora mesmo a facilitar o seu dia a dia com essa ferramenta
           simples e poderosa.{' '}
         </Text>
+        {loading && <ActivityIndicator color="#000" />}
       </View>
       <View style={styles.FormInput}>
-        <TextInput style={styles.LoginInput} placeholderTextColor="#000" placeholder="Seu nome:" />
+        <TextInput
+          style={styles.LoginInput}
+          placeholderTextColor="#000"
+          onChangeText={setName}
+          value={name}
+          placeholder="Seu nome:"
+        />
         <TextInput
           style={styles.LoginInput}
           placeholderTextColor="#000"
           onChangeText={setEmail}
           value={email}
           placeholder="E-mail:"
+          keyboardType="email-address"
         />
         <TextInput
           style={styles.LoginInput}
@@ -47,21 +112,19 @@ export default function Login({ navigation }: { navigation: any }) {
           onChangeText={setPassword}
           value={password}
           placeholder="Senha:"
+          secureTextEntry
         />
         <TextInput
           style={styles.LoginInput}
           placeholderTextColor="#000"
+          onChangeText={setConfirmPassword}
+          value={confirmPassword}
           placeholder="Confirme sua Senha:"
+          secureTextEntry
         />
-        <Button
-          title="REGISTRAR"
-          onPress={() => createUserWithEmailAndPassword(auth, email, password)}
-        />
+        <Button title="REGISTRAR" onPress={register} />
         <Text style={styles.SmallTextPurple}>Já possui uma conta?</Text>
-        <ButtonInlined
-          title="ENTRAR NA CONTA"
-          onPress={() => createUserWithEmailAndPassword(auth, email, password)}
-        />
+        <ButtonInlined title="ENTRAR NA CONTA" onPress={() => navigation.navigate('Register')} />
       </View>
     </View>
   );
@@ -77,15 +140,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 
-  Container: {
-    flex: 1,
-    padding: 15,
-    paddingBottom: 0,
-    paddingTop: 0,
-    backgroundColor: '#FFFFFF',
-    height: '100%',
-  },
-
   LargeTextBlack: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -96,20 +150,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     color: '#000',
-    textAlign: 'justify',
-  },
-
-  CenteredSmallTextBlack: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#000',
-    textAlign: 'center',
-  },
-
-  SmallTextGreen: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#59BF69',
     textAlign: 'justify',
   },
 
@@ -139,10 +179,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
   },
-
-  InfoContent: {
-    textAlign: 'center',
-  },
-
-  WhiteButton: {},
 });

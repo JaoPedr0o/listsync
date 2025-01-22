@@ -1,10 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StackScreenProps } from '@react-navigation/stack';
-import Avatar from '~/components/Avatar';
+import React from 'react';
 
 import { RootStackParamList } from '.';
 import Home from '../screens/home';
+
+import Avatar from '~/components/Avatar';
 
 type Props = StackScreenProps<RootStackParamList, 'DrawerNavigator'>;
 
