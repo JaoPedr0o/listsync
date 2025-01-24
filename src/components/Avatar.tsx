@@ -3,9 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
+import { logOut } from '~/utils/functions/logout';
+
 export default function Avatar() {
   return (
-    <TouchableOpacity style={styles.Container}>
+    <TouchableOpacity style={styles.Container} onPress={() => logOut()}>
       <FontAwesomeIcon color="#FFFFFF" size={14} icon={faUser} />
     </TouchableOpacity>
   );

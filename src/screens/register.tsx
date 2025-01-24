@@ -1,16 +1,9 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import React, { useState } from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  ImageBackground,
-  Alert,
-  ActivityIndicator,
-} from 'react-native';
+import { View, StyleSheet, Text, TextInput, Alert, ActivityIndicator } from 'react-native';
 
+import SvgLogo from '~/assets/Logo';
 import { Button } from '~/components/Button';
 import { ButtonInlined } from '~/components/ButtonInlined';
 import { auth, db } from '~/services/firebase';
@@ -22,7 +15,6 @@ export default function Register({ navigation }: { navigation: any }) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Função para validar os campos antes de tentar criar o usuário
   function validateInputs() {
     if (name.length === 0 || email.length === 0) {
       Alert.alert('Preencha todos os campos!');
@@ -47,7 +39,6 @@ export default function Register({ navigation }: { navigation: any }) {
     return true;
   }
 
-  // Função para registrar o usuário
   function register() {
     if (!validateInputs()) return;
 
@@ -82,13 +73,13 @@ export default function Register({ navigation }: { navigation: any }) {
   return (
     <View style={styles.mainContainer}>
       <View>
-        <ImageBackground style={styles.LogoImage} source={require('../assets/logo.png')} />
-        <Text style={styles.LargeTextBlack}>OLÁ!</Text>
+        <SvgLogo />
+        <Text style={styles.LargeTextBlack}>SEJA BEM VINDO!</Text>
         <Text style={styles.SmallTextBlack}>
           Coloque seus dados e comece agora mesmo a facilitar o seu dia a dia com essa ferramenta
           simples e poderosa.{' '}
         </Text>
-        {loading && <ActivityIndicator color="#000" />}
+        {loading && <ActivityIndicator style={styles.ActiveIndicator} size="large" color="#000" />}
       </View>
       <View style={styles.FormInput}>
         <TextInput
@@ -133,7 +124,7 @@ export default function Register({ navigation }: { navigation: any }) {
 const styles = StyleSheet.create({
   mainContainer: {
     alignItems: 'center',
-    padding: 20,
+    padding: 40,
     flex: 1,
     backgroundColor: '#FFFFFF',
     height: '100%',
@@ -142,7 +133,7 @@ const styles = StyleSheet.create({
 
   LargeTextBlack: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '900',
     color: '#000',
   },
 
@@ -167,7 +158,7 @@ const styles = StyleSheet.create({
   },
 
   FormInput: {
-    width: '80%',
+    width: '100%',
     marginBottom: 20,
     gap: 20,
   },
@@ -178,5 +169,9 @@ const styles = StyleSheet.create({
     width: '100%',
     fontSize: 14,
     fontWeight: 'bold',
+  },
+
+  ActiveIndicator: {
+    marginTop: 30,
   },
 });

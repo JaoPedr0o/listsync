@@ -9,7 +9,7 @@ import Item from '~/screens/item';
 
 export type RootStackParamList = {
   DrawerNavigator: undefined;
-  Item: undefined;
+  Item: { listId: string };
   Modal: undefined;
   Login: undefined;
   Register: undefined;

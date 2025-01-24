@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingLeft: 20,
     paddingRight: 10,
-    maxWidth: 200,
+    maxWidth: 160,
     minWidth: 160,
     fontWeight: 'bold',
     flex: 1,

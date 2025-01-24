@@ -9,8 +9,8 @@ export type ListCardProps = {
 export default function ListCard(props: ListCardProps) {
   return (
     <TouchableOpacity style={styles.Container} onPress={props.onPress}>
-      <View style={styles.Image} />
       <Text style={styles.TextBold}>{props.Description}</Text>
+      <View style={styles.Circle}/>
     </TouchableOpacity>
   );
 }
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'black',
     fontWeight: 'bold',
-    width: '70%',
+    width: '90%',
   },
 
   GrayTextBold: {
@@ -44,10 +44,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
-  Image: {
-    width: 65,
-    height: 65,
+  Circle: {
+    position: 'absolute',
     backgroundColor: '#FFFFFF',
-    borderRadius: 20,
+    width: 30,
+    height: 30,
+    right: -15,
+    borderRadius: 15,
+    zIndex: 5,
   },
 });

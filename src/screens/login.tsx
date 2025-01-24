@@ -1,15 +1,8 @@
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  ImageBackground,
-  ActivityIndicator,
-  Alert,
-} from 'react-native';
+import { View, StyleSheet, Text, TextInput, ActivityIndicator, Alert } from 'react-native';
 
+import SvgLogo from '~/assets/Logo';
 import { Button } from '~/components/Button';
 import { ButtonInlined } from '~/components/ButtonInlined';
 import { auth } from '~/services/firebase';
@@ -51,14 +44,13 @@ export default function Login({ navigation }: { navigation: any }) {
   return (
     <View style={styles.mainContainer}>
       <View>
-        <ImageBackground style={styles.LogoImage} source={require('../assets/logo.png')} />
-        <Text style={styles.LargeTextBlack}>BEM VINDO!</Text>
+        <SvgLogo />
+        <Text style={styles.LargeTextBlack}>OLÁ!</Text>
         <Text style={styles.SmallTextBlack}>
           Entre em sua conta ou <Text style={styles.SmallTextGreen}>CLIQUE AQUI</Text> para
-          continuar sem conta, porém, esteja ciente de que não será possível compartilhar suas
-          listas nem mantê-las salvas em nuvem!{' '}
+          continuar sem cadastro.{' '}
         </Text>
-        {loading && <ActivityIndicator color="#000" />}
+        {loading && <ActivityIndicator style={styles.ActiveIndicator} size="large" color="#000" />}
       </View>
       <View style={styles.FormInput}>
         <TextInput
@@ -89,7 +81,7 @@ export default function Login({ navigation }: { navigation: any }) {
 const styles = StyleSheet.create({
   mainContainer: {
     alignItems: 'center',
-    padding: 20,
+    padding: 40,
     flex: 1,
     backgroundColor: '#FFFFFF',
     height: '100%',
@@ -98,7 +90,7 @@ const styles = StyleSheet.create({
 
   LargeTextBlack: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '900',
     color: '#000',
   },
 
@@ -118,14 +110,14 @@ const styles = StyleSheet.create({
 
   SmallTextGreen: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: '900',
     color: '#59BF69',
     textAlign: 'justify',
   },
 
   SmallTextPurple: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: '900',
     color: '#6C59BF',
     textAlign: 'center',
   },
@@ -137,7 +129,7 @@ const styles = StyleSheet.create({
   },
 
   FormInput: {
-    width: '80%',
+    width: '100%',
     marginBottom: 20,
     gap: 20,
   },
@@ -148,5 +140,9 @@ const styles = StyleSheet.create({
     width: '100%',
     fontSize: 14,
     fontWeight: 'bold',
+  },
+
+  ActiveIndicator: {
+    marginTop: 50,
   },
 });

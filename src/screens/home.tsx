@@ -1,6 +1,6 @@
-import { faClose, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { doc, getDoc, setDoc, addDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import React, { useState, useEffect } from 'react';
 import {
   FlatList,
@@ -11,13 +11,18 @@ import {
   Modal,
   TouchableOpacity,
   TextInput,
+  Alert,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
+import SvgEmptyList from '~/assets/EmptyList';
 import FooterList from '~/components/FooterList';
 import ListCard from '~/components/ListCard';
 import HeaderContentInfo from '~/components/headerContentInfo';
 import { auth, db } from '~/services/firebase';
+import { fetchUserData } from '~/utils/functions/fetchUserData';
+import { generateUnicId } from '~/utils/functions/generateUnicId';
 
 export default function Home({ navigation }: { navigation: any }) {
   const [userData, setUserData] = useState<any>(null);
@@ -25,52 +30,57 @@ export default function Home({ navigation }: { navigation: any }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [listRef, setlistRef] = useState('');
 
-  async function fetchUserData() {
-    try {
-      const user = auth.currentUser;
-      if (user) {
-        const docRef = doc(db, 'users', user.uid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setUserData(docSnap.data());
-        } else {
-          console.log('Sem dados!');
-        }
-      } else {
-        console.log('Usuário não authenticado');
+  const loadData = async () => {
+    const user = auth.currentUser;
+    if (user) {
+      try {
+        const data = await fetchUserData();
+        setUserData(data);
+        setLoading(false);
+      } catch (error) {
+        Alert.alert('Erro ao buscar listas:' + error);
+        setLoading(false);
       }
-    } catch (error) {
-      console.error('Erro ao realizar a busca:', error);
-    } finally {
+    } else {
+      Alert.alert('Usuário não autenticado');
       setLoading(false);
     }
-  }
-
-  useEffect(() => {
-    fetchUserData();
-  }, []);
-
-  const gerarIDUnico = () => {
-    return `id-${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
   };
 
-  const addToLists = async (userData: string, newListData: string) => {
-    try {
-      setLoading(true);
-      const userRef = doc(db, 'users', userData);
-      const listData = { listName: listRef, listId: gerarIDUnico() };
+  useEffect(() => {
+    loadData();
+  }, []);
 
-      await updateDoc(userRef, {
-        lists: arrayUnion(listData),
-      });
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
-      console.log('Novo item adicionado ao array com sucesso!');
-      fetchUserData();
-      setLoading(false);
-      setlistRef('');
-      setModalVisible(false);
-    } catch (error) {
-      console.error('Erro ao adicionar item ao array: ', error);
+  const addToLists = async () => {
+    const user = auth.currentUser;
+    if (user) {
+      try {
+        if (listRef !== '') {
+          setLoading(true);
+          const userRef = doc(db, 'users', user.uid);
+          const listData = { listName: listRef, listId: generateUnicId(), listItens: [] };
+
+          await updateDoc(userRef, {
+            lists: arrayUnion(listData),
+          });
+          Alert.alert('Nova lista criada com sucesso!');
+          loadData();
+          setLoading(false);
+          setlistRef('');
+          setModalVisible(false);
+        } else {
+          Alert.alert('Digite um nome para a lista!');
+        }
+      } catch (error) {
+        Alert.alert('Erro ao adicionar item ao array: ' + error);
+        setLoading(false);
+      }
+    } else {
+      Alert.alert('Usuário não autenticado');
     }
   };
 
@@ -85,7 +95,7 @@ export default function Home({ navigation }: { navigation: any }) {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.container}>
-        {userData ? (
+        {auth.currentUser ? (
           <HeaderContentInfo
             BottomText="Aqui estão suas listas de compras."
             UserName={userData.displayName}
@@ -98,41 +108,47 @@ export default function Home({ navigation }: { navigation: any }) {
           <SafeAreaView>
             <FlatList
               showsVerticalScrollIndicator={false}
-              data={userData.lists}
-              keyExtractor={(item) => item.listID}
+              data={userData?.lists || []}
+              keyExtractor={(item) => (item.listId ? item.listId.toString() : String(item.index))}
               renderItem={({ item }) => (
-                <ListCard onPress={() => navigation.navigate('Item')} Description={item.listName} />
+                <ListCard
+                  onPress={() => navigation.navigate('Item', { listId: item.listId })}
+                  Description={item.listName}
+                />
               )}
+              ListEmptyComponent={
+                <View style={styles.EmptyListWrapper}>
+                  <SvgEmptyList />
+                </View>
+              }
             />
 
             <Modal
               animationType="slide"
               transparent
               visible={modalVisible}
-              onRequestClose={() => setModalVisible(!modalVisible)}>
-              <View style={styles.centeredView}>
-                <View style={styles.modalView}>
+              onRequestClose={closeModal}>
+              <TouchableOpacity
+                activeOpacity={0}
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+                style={styles.centeredView}>
+                <KeyboardAvoidingView style={styles.modalView}>
                   <View style={styles.addListWrapper}>
                     <TextInput
                       style={styles.ListInput}
                       placeholder="Nome da lista"
                       value={listRef}
                       onChangeText={setlistRef}
+                      autoFocus
                     />
-                    <TouchableOpacity
-                      style={styles.ListAddButton}
-                      onPress={() => addToLists(auth.currentUser.uid, listRef)}>
+                    <TouchableOpacity style={styles.ListAddButton} onPress={addToLists}>
                       <FontAwesomeIcon color="#FFFFFF" size={20} icon={faPlusCircle} />
                     </TouchableOpacity>
                   </View>
-
-                  <TouchableOpacity
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={() => setModalVisible(!modalVisible)}>
-                    <FontAwesomeIcon color="#FFFFFF" size={20} icon={faClose} />
-                  </TouchableOpacity>
-                </View>
-              </View>
+                </KeyboardAvoidingView>
+              </TouchableOpacity>
             </Modal>
           </SafeAreaView>
         </SafeAreaProvider>
@@ -179,8 +195,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderTopRightRadius: 20,
     boxShadow: '#00000001 0px 1px 3px 0px, #878787 0px 0px 1px 0px',
-    borderRadius: 20,
-    padding: 30,
+    padding: 20,
     width: '100%',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -223,5 +238,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+
+  EmptyListWrapper: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    marginTop: '70%',
   },
 });
