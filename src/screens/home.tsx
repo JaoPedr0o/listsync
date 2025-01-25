@@ -1,7 +1,9 @@
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { useFocusEffect } from '@react-navigation/native';
+import * as NavigationBar from 'expo-navigation-bar';
 import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   FlatList,
   StyleSheet,
@@ -13,6 +15,7 @@ import {
   TextInput,
   Alert,
   KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -25,10 +28,12 @@ import { fetchUserData } from '~/utils/functions/fetchUserData';
 import { generateUnicId } from '~/utils/functions/generateUnicId';
 
 export default function Home({ navigation }: { navigation: any }) {
+  const textInputRef = useRef<TextInput>(null);
   const [userData, setUserData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [listRef, setlistRef] = useState('');
+  const [listInputColor, setListInputColor] = useState('#E0E4EA');
 
   const loadData = async () => {
     const user = auth.currentUser;
@@ -49,10 +54,22 @@ export default function Home({ navigation }: { navigation: any }) {
 
   useEffect(() => {
     loadData();
+    NavigationBar.setBackgroundColorAsync('#FFFFFF');
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      loadData();
+    }, [])
+  );
 
   const closeModal = () => {
     setModalVisible(false);
+  };
+
+  const handleFocus = () => {
+    setModalVisible(true);
+    textInputRef.current?.focus();
   };
 
   const addToLists = async () => {
@@ -67,16 +84,19 @@ export default function Home({ navigation }: { navigation: any }) {
             listId: generateUnicId(),
             listItens: [],
             listActivity: true,
+            listColor: listInputColor,
           };
 
           await updateDoc(userRef, {
             lists: arrayUnion(listData),
           });
           Alert.alert('Nova lista criada com sucesso!');
+          navigation.navigate('Item', { listId: listData.listId });
           loadData();
           setLoading(false);
           setlistRef('');
           setModalVisible(false);
+          setListInputColor('#E0E4EA');
         } else {
           Alert.alert('Digite um nome para a lista entre 5 e 30 caracteres!');
         }
@@ -119,6 +139,7 @@ export default function Home({ navigation }: { navigation: any }) {
                 <ListCard
                   onPress={() => navigation.navigate('Item', { listId: item.listId })}
                   Description={item.listName}
+                  Color={item.listColor}
                 />
               )}
               ListEmptyComponent={
@@ -128,43 +149,67 @@ export default function Home({ navigation }: { navigation: any }) {
               }
             />
 
-            <Modal
-              animationType="slide"
-              transparent
-              visible={modalVisible}
-              onRequestClose={closeModal}>
-              <TouchableOpacity
-                activeOpacity={0}
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                }}
-                style={styles.centeredView}>
-                <KeyboardAvoidingView style={styles.modalView}>
-                  <View style={styles.addListWrapper}>
-                    <TextInput
-                      style={styles.ListInput}
-                      placeholder="Nome da lista"
-                      value={listRef}
-                      onChangeText={setlistRef}
-                      autoFocus
-                    />
-                    <TouchableOpacity style={styles.ListAddButton} onPress={addToLists}>
-                      <FontAwesomeIcon color="#FFFFFF" size={20} icon={faPlusCircle} />
-                    </TouchableOpacity>
+            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+              <Modal
+                animationType="slide"
+                transparent
+                visible={modalVisible}
+                onRequestClose={closeModal}>
+                <TouchableOpacity
+                  activeOpacity={0}
+                  onPress={() => {
+                    setModalVisible(!modalVisible);
+                  }}
+                  style={styles.centeredView}>
+                  <View style={styles.modalView}>
+                    <View style={styles.addListWrapper}>
+                      <TextInput
+                        ref={textInputRef}
+                        style={[styles.ListInput, { borderLeftColor: listInputColor }]}
+                        placeholder="Nome da lista"
+                        value={listRef}
+                        onChangeText={setlistRef}
+                        autoFocus
+                      />
+                      <TouchableOpacity style={styles.ListAddButton} onPress={addToLists}>
+                        <FontAwesomeIcon color="#FFFFFF" size={20} icon={faPlusCircle} />
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.ColorsWrapper}>
+                      <TouchableOpacity
+                        onPress={() => setListInputColor('#E0E4EA')}
+                        style={[styles.ColorInput, { backgroundColor: '#E0E4EA' }]}
+                      />
+                      <TouchableOpacity
+                        onPress={() => setListInputColor('#F1F491')}
+                        style={[styles.ColorInput, { backgroundColor: '#F1F491' }]}
+                      />
+                      <TouchableOpacity
+                        onPress={() => setListInputColor('#BFF491')}
+                        style={[styles.ColorInput, { backgroundColor: '#BFF491' }]}
+                      />
+                      <TouchableOpacity
+                        onPress={() => setListInputColor('#91DFF4')}
+                        style={[styles.ColorInput, { backgroundColor: '#91DFF4' }]}
+                      />
+                      <TouchableOpacity
+                        onPress={() => setListInputColor('#F491DF')}
+                        style={[styles.ColorInput, { backgroundColor: '#F491DF' }]}
+                      />
+                      <TouchableOpacity
+                        onPress={() => setListInputColor('#F49191')}
+                        style={[styles.ColorInput, { backgroundColor: '#F49191' }]}
+                      />
+                    </View>
                   </View>
-                </KeyboardAvoidingView>
-              </TouchableOpacity>
-            </Modal>
+                </TouchableOpacity>
+              </Modal>
+            </KeyboardAvoidingView>
           </SafeAreaView>
         </SafeAreaProvider>
       </View>
 
-      <FooterList
-        enable={false}
-        onPress={() => setModalVisible(true)}
-        isListItems={false}
-        items={15}
-      />
+      <FooterList enable={false} onPress={handleFocus} isListItems={false} items={15} />
     </View>
   );
 }
@@ -202,11 +247,11 @@ const styles = StyleSheet.create({
     boxShadow: '#00000001 0px 1px 3px 0px, #878787 0px 0px 1px 0px',
     padding: 20,
     width: '100%',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
+    shadowColor: '#000000',
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 100,
     shadowRadius: 4,
-    elevation: 2,
+    elevation: 8.5,
   },
   button: {
     position: 'absolute',
@@ -222,11 +267,12 @@ const styles = StyleSheet.create({
   ListInput: {
     height: 60,
     width: '80%',
-    backgroundColor: '#E0E4EA',
     borderRadius: 20,
     paddingVertical: 14,
+    backgroundColor: '#E0E4EA',
+    borderRightWidth: 10,
     paddingLeft: 14,
-    paddingRight: 14,
+    paddingRight: 24,
     fontWeight: 'bold',
     textAlignVertical: 'center',
     textAlign: 'left',
@@ -250,5 +296,22 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     marginTop: '70%',
+  },
+
+  ColorsWrapper: {
+    margin: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
+  ColorInput: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    shadowColor: '#000000',
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 100,
+    shadowRadius: 4,
+    elevation: 0.5,
   },
 });

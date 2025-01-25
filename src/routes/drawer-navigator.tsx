@@ -40,7 +40,7 @@ export default function DrawerNavigator({ navigation }: Props) {
           headerRight: () => <Avatar />,
           headerTitleAlign: 'center',
           headerTitleStyle: {
-            fontWeight: 'bold',
+            fontWeight: '900',
             fontSize: 20,
           },
           drawerIcon: ({ size, color }) => <Ionicons name="home" size={size} color={color} />,

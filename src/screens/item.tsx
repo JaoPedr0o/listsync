@@ -1,6 +1,7 @@
 import { faGears, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { useNavigation } from '@react-navigation/native';
+import { doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -22,6 +23,7 @@ import { fetchUserData } from '~/utils/functions/fetchUserData';
 import { generateUnicId } from '~/utils/functions/generateUnicId';
 
 export default function Item({ route }: { route: any }) {
+  const navigation = useNavigation();
   const { listId } = route.params;
   const [userData, setUserData] = useState<any>(null);
   const [itemRef, setItemRef] = useState('');
@@ -29,6 +31,7 @@ export default function Item({ route }: { route: any }) {
   const [listActivity, setListActivity] = useState(true);
   const [quantity, setQuantity] = useState('');
   const [listName, setListName] = useState('');
+  const [listColor, setListColor] = useState('');
   const [type, setType] = useState('unit');
   const [loading, setLoading] = useState(false);
 
@@ -44,6 +47,7 @@ export default function Item({ route }: { route: any }) {
     listItens: ListItem[];
     listName: string;
     listActivity: boolean;
+    listColor: string;
   }
 
   const loadData = async () => {
@@ -74,6 +78,7 @@ export default function Item({ route }: { route: any }) {
             setListActivity(openedList.listActivity);
             setListItensCount(openedList.listItens.length);
             setListName(openedList.listName);
+            setListColor(openedList.listColor);
           }
         }
         setUserData(data);
@@ -217,6 +222,52 @@ export default function Item({ route }: { route: any }) {
     }
   };
 
+  const handleDeleteList = async () => {
+    const user = auth.currentUser;
+    if (user) {
+      try {
+        setLoading(true); // Inicia o carregamento enquanto o processo é realizado
+
+        // Acesso ao documento do usuário
+        const userRef = doc(db, 'users', user.uid);
+
+        // Pega o documento do usuário
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+
+          // Garantir que o TypeScript saiba que userData.lists é um array de List
+          const userLists: List[] = userData.lists;
+
+          // Encontrar o índice da lista com o listId específico
+          const listIndex = userLists.findIndex((list) => list.listId === listId);
+
+          if (listIndex !== -1) {
+            // Remover a lista selecionada do array
+            userLists.splice(listIndex, 1);
+
+            // Atualizar o documento no Firestore com a nova lista
+            await updateDoc(userRef, { lists: userLists });
+
+            Alert.alert('Lista deletada com sucesso!');
+            navigation.goBack();
+          } else {
+            Alert.alert('Lista não encontrada.');
+          }
+        } else {
+          Alert.alert('Erro: Documento do usuário não encontrado.');
+        }
+      } catch (error) {
+        Alert.alert('Erro ao deletar a lista: ' + error);
+      } finally {
+        setLoading(false); // Finaliza o carregamento
+      }
+    } else {
+      Alert.alert('Usuário não autenticado');
+      setLoading(false); // Finaliza o carregamento se não houver usuário autenticado
+    }
+  };
+
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -228,7 +279,7 @@ export default function Item({ route }: { route: any }) {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.Container}>
-        <Text style={styles.CenteredSmallTextBlack}>{listName}</Text>
+        <Text style={[styles.ListNameTitle, { backgroundColor: listColor }]}>{listName}</Text>
         <View style={styles.AddItemContainer}>
           <TextInput
             style={styles.MainInput}
@@ -277,6 +328,7 @@ export default function Item({ route }: { route: any }) {
         </SafeAreaProvider>
       </View>
       <FooterList
+        onDelete={handleDeleteList}
         enable={listActivity}
         isListItems
         toggle={handleChangeActivity}
@@ -348,14 +400,27 @@ const styles = StyleSheet.create({
     minWidth: 160,
     fontWeight: 'bold',
     flex: 1,
+    borderWidth: 0.1,
+    borderColor: '#000000',
   },
 
-  CenteredSmallTextBlack: {
+  ListNameTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: '900',
     color: '#000',
+    borderRadius: 20,
     textAlign: 'center',
-    margin: 15,
+    padding: 10,
+    marginBottom: 10,
+    marginTop: 10,
+    borderStyle: 'solid',
+    borderWidth: 0.1,
+    borderColor: '#000000',
+    shadowColor: '#000000',
+    shadowOffset: { width: 1, height: 2 },
+    shadowOpacity: 100,
+    shadowRadius: 2,
+    elevation: 1.5,
   },
 
   Input: {
@@ -370,6 +435,8 @@ const styles = StyleSheet.create({
     width: 75,
     fontWeight: 'bold',
     flex: 1,
+    borderWidth: 0.1,
+    borderColor: '#000000',
   },
 
   ListTypeButton: {

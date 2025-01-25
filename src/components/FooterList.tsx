@@ -13,6 +13,7 @@ type FooterListProps = {
   isListItems: boolean;
   onPress?: () => void;
   toggle?: () => void;
+  onDelete?: () => void;
 };
 
 export default function FooterList(props: FooterListProps) {
@@ -25,7 +26,7 @@ export default function FooterList(props: FooterListProps) {
             {props.enable ? <Text style={styles.ActiveText}>ATIVA</Text> : <Text style={styles.InativeText}>INATIVA</Text>}
             <Text style={styles.SmalltextBold}>{props.items ? props.items : "0"} itens</Text>
           </View>
-          <TouchableOpacity style={styles.ActionButton}>
+          <TouchableOpacity onPress={props.onDelete} style={styles.ActionButton}>
             <FontAwesomeIcon color="#FFFFFF" size={20} icon={faTrash} />  
           </TouchableOpacity> 
           <TouchableOpacity style={styles.ActionButton}>
@@ -54,7 +55,17 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     backgroundColor: '#FFFFFF',
     borderTopRightRadius: 20,
-    boxShadow: '#00000001 0px 1px 3px 0px, #878787 0px 0px 1px 0px',
+    shadowColor: '#000000',
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 100,
+    shadowRadius: 4,
+    elevation: 8.5,
+    borderTopWidth: 0.1,
+    borderTopColor: '#000000',
+    borderRightWidth: 0.1,
+    borderRightColor: '#000000',
+    borderLeftWidth: 0.1,
+    borderLeftColor: '#000000',
   },
 
   WrapperFooterItemList: {

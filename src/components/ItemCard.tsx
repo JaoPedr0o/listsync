@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     height: 60,
     width: '99%',
+    alignSelf: 'center',
     backgroundColor: '#E0E4EA',
     borderRadius: 20,
     flexDirection: 'row',
@@ -41,6 +42,13 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     marginTop: 0.5,
     marginLeft: 0.5,
+    borderWidth: 0.1,
+    borderColor: '#000000',
+    shadowColor: '#000000',
+    shadowOffset: { width: 1, height: 2 },
+    shadowOpacity: 100,
+    shadowRadius: 2,
+    elevation: 1.5,
   },
 
   TextBold: {
@@ -87,6 +95,8 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: 70,
     height: 30,
+    borderWidth: 0.2,
+    borderColor: '#000000',
   },
 
   QuantityText: {

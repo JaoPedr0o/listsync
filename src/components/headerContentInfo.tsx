@@ -9,7 +9,7 @@ type headerContentInfoProps = {
 export default function HeaderContentInfo(props: headerContentInfoProps) {
   return (
     <View style={styles.Container}>
-      <Text style={styles.TextBold}>Olá!</Text>
+      <Text style={styles.TitleTextBold}>Olá!</Text>
       <Text style={styles.TextBold}>{props.UserName}</Text>
       <Text style={styles.GrayTextBold}>{props.BottomText}</Text>
     </View>
@@ -25,6 +25,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'black',
     fontWeight: 'bold',
+  },
+
+  TitleTextBold: {
+    fontSize: 20,
+    color: 'black',
+    fontWeight: '900',
   },
 
   GrayTextBold: {

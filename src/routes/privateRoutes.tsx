@@ -34,7 +34,7 @@ export default function PrivateRoutes() {
           title: 'LISTSYNC',
           headerTitleAlign: 'center',
           headerStyle: { shadowColor: '#FFFFFF' },
-          headerTitleStyle: { fontSize: 20, fontWeight: 'bold' },
+          headerTitleStyle: { fontSize: 20, fontWeight: '900' },
           headerRight: () => <Avatar />,
         }}
       />
