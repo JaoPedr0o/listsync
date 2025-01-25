@@ -31,6 +31,8 @@ export default function PrivateRoutes() {
         component={Item}
         options={{
           headerShown: true,
+          title: 'LISTSYNC',
+          headerTitleAlign: 'center',
           headerStyle: { shadowColor: '#FFFFFF' },
           headerTitleStyle: { fontSize: 20, fontWeight: 'bold' },
           headerRight: () => <Avatar />,

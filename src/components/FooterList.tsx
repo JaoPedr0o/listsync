@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { faTrash, faFilePdf, faShareNodes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { Button } from './Button';
@@ -12,9 +12,11 @@ type FooterListProps = {
   enable: boolean;
   isListItems: boolean;
   onPress?: () => void;
+  toggle?: () => void;
 };
 
 export default function FooterList(props: FooterListProps) {
+  const [isEnable] = useState(props.enable);
   return (
     <View style={styles.Container}>
       {props.isListItems ? 
@@ -32,7 +34,7 @@ export default function FooterList(props: FooterListProps) {
           <TouchableOpacity style={styles.ActionButton}>
             <FontAwesomeIcon color="#FFFFFF" size={20} icon={faShareNodes} />  
           </TouchableOpacity> 
-          <CustomSwitch isActive={props.enable}/>
+          <CustomSwitch isActive={isEnable} onToggle={props.toggle}/>
         </View> 
       : 
         <Button onPress={props.onPress} title="NOVA LISTA" />}

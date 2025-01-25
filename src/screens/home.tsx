@@ -59,10 +59,15 @@ export default function Home({ navigation }: { navigation: any }) {
     const user = auth.currentUser;
     if (user) {
       try {
-        if (listRef !== '') {
+        if (listRef !== '' && listRef.length <= 30 && listRef.length >= 5) {
           setLoading(true);
           const userRef = doc(db, 'users', user.uid);
-          const listData = { listName: listRef, listId: generateUnicId(), listItens: [] };
+          const listData = {
+            listName: listRef,
+            listId: generateUnicId(),
+            listItens: [],
+            listActivity: true,
+          };
 
           await updateDoc(userRef, {
             lists: arrayUnion(listData),
@@ -73,7 +78,7 @@ export default function Home({ navigation }: { navigation: any }) {
           setlistRef('');
           setModalVisible(false);
         } else {
-          Alert.alert('Digite um nome para a lista!');
+          Alert.alert('Digite um nome para a lista entre 5 e 30 caracteres!');
         }
       } catch (error) {
         Alert.alert('Erro ao adicionar item ao array: ' + error);

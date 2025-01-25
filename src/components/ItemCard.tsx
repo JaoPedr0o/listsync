@@ -15,7 +15,7 @@ export default function ItemCard(props: ItemCardProps) {
       <Text style={styles.TextBold}>{props.Description}</Text>
       <View style={styles.EditItemWrapper}>
         <View style={styles.QuantityWrapper}>
-          <Text style={styles.QuantityText}>{props.Quantity}kgs</Text>
+          <Text style={styles.QuantityText}>{props.Quantity}</Text>
         </View>
         <TouchableOpacity style={styles.ItemEditButton}>
           <FontAwesomeIcon color="#FFFFFF" size={20} icon={faPencil} />
