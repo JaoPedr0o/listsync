@@ -124,7 +124,7 @@ export default function Register({ navigation }: { navigation: any }) {
 const styles = StyleSheet.create({
   mainContainer: {
     alignItems: 'center',
-    padding: 40,
+    padding: 30,
     flex: 1,
     backgroundColor: '#FFFFFF',
     height: '100%',

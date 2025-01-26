@@ -23,7 +23,7 @@ export default function FooterList(props: FooterListProps) {
       {props.isListItems ? 
         <View style={styles.WrapperFooterItemList}>
           <View style={styles.WrapperText}>
-            {props.enable ? <Text style={styles.ActiveText}>ATIVA</Text> : <Text style={styles.InativeText}>INATIVA</Text>}
+            {props.enable ? <Text style={styles.ActiveText}>COMPRA</Text> : <Text style={styles.InativeText}>EDIÇÃO</Text>}
             <Text style={styles.SmalltextBold}>{props.items ? props.items : "0"} itens</Text>
           </View>
           <TouchableOpacity onPress={props.onDelete} style={styles.ActionButton}>
@@ -52,20 +52,15 @@ const styles = StyleSheet.create({
     bottom: 0,
     height: 80,
     zIndex: 40,
-    borderTopLeftRadius: 20,
+    borderTopLeftRadius: 10,
     backgroundColor: '#FFFFFF',
-    borderTopRightRadius: 20,
-    shadowColor: '#000000',
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 100,
+    borderTopRightRadius: 10,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 8.5,
-    borderTopWidth: 0.1,
-    borderTopColor: '#000000',
-    borderRightWidth: 0.1,
-    borderRightColor: '#000000',
-    borderLeftWidth: 0.1,
-    borderLeftColor: '#000000',
+    elevation: 3,
   },
 
   WrapperFooterItemList: {
@@ -83,13 +78,13 @@ const styles = StyleSheet.create({
 
   ActiveText: {
     color: "#59BF69",
-    fontWeight: 'bold',
+    fontWeight: '900',
     fontSize: 16,
   },
 
   InativeText: {
-    color: "#BF6259",
-    fontWeight: 'bold',
+    color: "#878787",
+    fontWeight: '900',
     fontSize: 16,
   },
 
@@ -114,7 +109,7 @@ const styles = StyleSheet.create({
   ActionButton: {
     alignItems: 'center',
     backgroundColor: '#000000',
-    borderRadius: 24,
+    borderRadius: 10,
     elevation: 5,
     height: 40,
     flexDirection: 'row',

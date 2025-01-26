@@ -6,6 +6,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 export type ItemCardProps = {
   Description: string;
   Quantity: number | string;
+  Type: string;
   onPress: () => void;
 };
 
@@ -15,10 +16,13 @@ export default function ItemCard(props: ItemCardProps) {
       <Text style={styles.TextBold}>{props.Description}</Text>
       <View style={styles.EditItemWrapper}>
         <View style={styles.QuantityWrapper}>
-          <Text style={styles.QuantityText}>{props.Quantity}</Text>
+          <Text style={styles.QuantityText}>
+            {props.Quantity}
+            <Text style={styles.TypeText}>{props.Type}</Text>
+          </Text>
         </View>
         <TouchableOpacity style={styles.ItemEditButton}>
-          <FontAwesomeIcon color="#FFFFFF" size={20} icon={faPencil} />
+          <FontAwesomeIcon color="#FFFFFF" size={15} icon={faPencil} />
         </TouchableOpacity>
       </View>
     </TouchableOpacity>
@@ -27,48 +31,29 @@ export default function ItemCard(props: ItemCardProps) {
 
 const styles = StyleSheet.create({
   Container: {
-    position: 'relative',
     height: 60,
     width: '99%',
     alignSelf: 'center',
     backgroundColor: '#E0E4EA',
-    borderRadius: 20,
+    borderRadius: 10,
     flexDirection: 'row',
-    paddingLeft: 14,
-    paddingRight: 14,
+    paddingHorizontal: 16,
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: 20,
-    marginBottom: 15,
-    marginTop: 0.5,
-    marginLeft: 0.5,
-    borderWidth: 0.1,
-    borderColor: '#000000',
-    shadowColor: '#000000',
-    shadowOffset: { width: 1, height: 2 },
-    shadowOpacity: 100,
-    shadowRadius: 2,
-    elevation: 1.5,
+    marginBottom: 10,
+
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 1,
   },
 
   TextBold: {
     fontSize: 16,
     color: '#000000',
     fontWeight: 'bold',
-    width: '70%',
-  },
-
-  GrayTextBold: {
-    fontSize: 14,
-    color: '#878787',
-    fontWeight: 'bold',
-  },
-
-  Image: {
-    width: 65,
-    height: 65,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 20,
+    flex: 1,
   },
 
   ItemEditButton: {
@@ -77,11 +62,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 40,
     height: 40,
-    borderRadius: 20,
+    borderRadius: 10,
   },
 
   EditItemWrapper: {
-    position: 'relative',
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -92,15 +76,20 @@ const styles = StyleSheet.create({
     right: 20,
     paddingLeft: 10,
     justifyContent: 'center',
-    borderRadius: 15,
-    width: 70,
+    borderRadius: 10,
+    width: 72,
     height: 30,
-    borderWidth: 0.2,
-    borderColor: '#000000',
   },
 
   QuantityText: {
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: '900',
+    color: '#000',
+  },
+
+  TypeText: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: '#000',
   },
 });

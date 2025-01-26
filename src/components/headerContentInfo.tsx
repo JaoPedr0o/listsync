@@ -18,7 +18,7 @@ export default function HeaderContentInfo(props: headerContentInfoProps) {
 
 const styles = StyleSheet.create({
   Container: {
-    height: 80,
+    height: 75,
   },
 
   TextBold: {

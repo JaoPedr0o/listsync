@@ -27,7 +27,7 @@ const CustomSwitch: React.FC<CustomSwitchProps> = ({ isActive = false, onToggle 
 
   const interpolatedColor = toggleAnimation.interpolate({
     inputRange: [0, 1],
-    outputRange: ['#BF6259', '#59BF69'],
+    outputRange: ['#878787', '#59BF69'],
   });
 
   const switchPosition = toggleAnimation.interpolate({

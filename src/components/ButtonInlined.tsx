@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderColor: '#000',
     borderWidth: 2,
-    borderRadius: 24,
+    borderRadius: 10,
     elevation: 5,
     height: 60,
     flexDirection: 'row',

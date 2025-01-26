@@ -32,7 +32,7 @@ export default function Item({ route }: { route: any }) {
   const [quantity, setQuantity] = useState('');
   const [listName, setListName] = useState('');
   const [listColor, setListColor] = useState('');
-  const [type, setType] = useState('unit');
+  const [type, setType] = useState('Un.');
   const [loading, setLoading] = useState(false);
 
   interface ListItem {
@@ -103,11 +103,31 @@ export default function Item({ route }: { route: any }) {
     loadData();
   }, []);
 
+  const toggleItemType = () => {
+    if (type === 'Un.') {
+      setType('Kg.');
+    } else if (type === 'Kg.') {
+      setType('G.');
+    } else if (type === 'G.') {
+      setType('L.');
+    } else if (type === 'L.') {
+      setType('Ml.');
+    } else if (type === 'Ml.') {
+      setType('M.');
+    } else if (type === 'M.') {
+      setType('Fatia');
+    } else if (type === 'Fatia') {
+      setType('T.');
+    } else if (type === 'T.') {
+      setType('Un.');
+    }
+  };
+
   const addToListItems = async () => {
     const user = auth.currentUser;
     if (user) {
       try {
-        if (itemRef !== '') {
+        if (itemRef !== '' && quantity === '0') {
           setLoading(true);
 
           // Acesso ao documento do usuário
@@ -160,7 +180,7 @@ export default function Item({ route }: { route: any }) {
           setItemRef('');
           setQuantity('');
         } else {
-          Alert.alert('Digite um nome para o item!');
+          Alert.alert('Digite um nome e quantidade para o item!');
         }
       } catch (error) {
         Alert.alert('Erro: ' + error);
@@ -279,7 +299,7 @@ export default function Item({ route }: { route: any }) {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.Container}>
-        <Text style={[styles.ListNameTitle, { backgroundColor: listColor }]}>{listName}</Text>
+        <Text style={[styles.ListNameTitle]}>{listName}</Text>
         <View style={styles.AddItemContainer}>
           <TextInput
             style={styles.MainInput}
@@ -290,6 +310,7 @@ export default function Item({ route }: { route: any }) {
             keyboardType="default"
           />
           <View style={styles.WrapperType}>
+            <Text style={styles.TypeIndicator}>{type}</Text>
             <TextInput
               style={styles.Input}
               value={quantity}
@@ -298,7 +319,7 @@ export default function Item({ route }: { route: any }) {
               placeholderTextColor="#878787"
               keyboardType="decimal-pad"
             />
-            <TouchableOpacity style={styles.ListTypeButton}>
+            <TouchableOpacity style={styles.ListTypeButton} onPress={toggleItemType}>
               <FontAwesomeIcon color="#FFFFFF" size={20} icon={faGears} />
             </TouchableOpacity>
           </View>
@@ -314,6 +335,7 @@ export default function Item({ route }: { route: any }) {
               <ItemCard
                 Quantity={item.itemQuantity}
                 onPress={() => {}}
+                Type={item.itemType}
                 Description={item.itemName}
               />
             )}
@@ -369,11 +391,13 @@ const styles = StyleSheet.create({
   },
 
   AddItemContainer: {
-    marginTop: 0.5,
+    marginTop: 0,
     height: 65,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     gap: 5,
+    marginBottom: 0,
   },
 
   TextBold: {
@@ -391,36 +415,31 @@ const styles = StyleSheet.create({
   MainInput: {
     backgroundColor: '#E0E4EA',
     height: 50,
-    borderRadius: 20,
+    borderRadius: 10,
     color: '#000',
     fontSize: 14,
     paddingLeft: 20,
     paddingRight: 10,
     maxWidth: 160,
     minWidth: 160,
-    fontWeight: 'bold',
+    fontWeight: '900',
     flex: 1,
-    borderWidth: 0.1,
-    borderColor: '#000000',
   },
 
   ListNameTitle: {
     fontSize: 16,
     fontWeight: '900',
-    color: '#000',
-    borderRadius: 20,
+    color: '#FFFFFF',
+    borderRadius: 10,
     textAlign: 'center',
+    backgroundColor: '#000000',
     padding: 10,
-    marginBottom: 10,
-    marginTop: 10,
     borderStyle: 'solid',
-    borderWidth: 0.1,
-    borderColor: '#000000',
-    shadowColor: '#000000',
-    shadowOffset: { width: 1, height: 2 },
-    shadowOpacity: 100,
-    shadowRadius: 2,
-    elevation: 1.5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
 
   Input: {
@@ -428,15 +447,13 @@ const styles = StyleSheet.create({
     height: 50,
     paddingLeft: 20,
     paddingRight: 10,
-    borderTopLeftRadius: 20,
-    borderBottomLeftRadius: 20,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
     color: '#000',
     fontSize: 12,
     width: 75,
-    fontWeight: 'bold',
+    fontWeight: '900',
     flex: 1,
-    borderWidth: 0.1,
-    borderColor: '#000000',
   },
 
   ListTypeButton: {
@@ -445,8 +462,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 30,
     height: 50,
-    borderTopRightRadius: 20,
-    borderBottomRightRadius: 20,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
   },
 
   ListAddButton: {
@@ -455,11 +472,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 50,
     height: 50,
-    borderRadius: 20,
+    borderRadius: 10,
   },
 
   WrapperType: {
+    position: 'relative',
     flexDirection: 'row',
     flex: 1,
+  },
+
+  TypeIndicator: {
+    position: 'absolute',
+    zIndex: 3,
+    fontWeight: '900',
+    fontSize: 12,
+    right: 30,
+    padding: 2,
+    margin: 2,
+    borderRadius: 5,
   },
 });

@@ -19,38 +19,27 @@ export default function ListCard(props: ListCardProps) {
 
 const styles = StyleSheet.create({
   Container: {
-    position: 'relative',
-    boxShadow: '#00000001 1px 1px 3px 0px',
     height: 90,
-    width: '99%',
+    width: '95%',
     alignSelf: 'center',
     backgroundColor: '#E0E4EA',
-    borderRadius: 20,
+    borderRadius: 10,
     flexDirection: 'row',
-    paddingLeft: 14,
+    paddingHorizontal: 16,
     alignItems: 'center',
-    gap: 20,
-    marginBottom: 15,
-    marginTop: 0.5,
-    marginLeft: 0.5,
-    borderWidth: 0.1,
-    shadowColor: '#000000',
-    shadowOffset: { width: 1, height: 2 },
-    shadowOpacity: 100,
-    shadowRadius: 2,
-    elevation: 1.5,
+    marginVertical: 5,
+
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 1,
   },
 
   TextBold: {
     fontSize: 16,
     color: 'black',
     fontWeight: 'bold',
-    width: '90%',
-  },
-
-  GrayTextBold: {
-    fontSize: 14,
-    color: '#878787',
-    fontWeight: 'bold',
+    flex: 1,
   },
 });

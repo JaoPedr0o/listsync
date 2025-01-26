@@ -177,28 +177,28 @@ export default function Home({ navigation }: { navigation: any }) {
                     </View>
                     <View style={styles.ColorsWrapper}>
                       <TouchableOpacity
-                        onPress={() => setListInputColor('#E0E4EA')}
-                        style={[styles.ColorInput, { backgroundColor: '#E0E4EA' }]}
+                        onPress={() => setListInputColor('#F1F3F5')}
+                        style={[styles.ColorInput, { backgroundColor: '#F1F3F5' }]}
                       />
                       <TouchableOpacity
-                        onPress={() => setListInputColor('#F1F491')}
-                        style={[styles.ColorInput, { backgroundColor: '#F1F491' }]}
+                        onPress={() => setListInputColor('#FFF5BA')}
+                        style={[styles.ColorInput, { backgroundColor: '#FFF5BA' }]}
                       />
                       <TouchableOpacity
-                        onPress={() => setListInputColor('#BFF491')}
-                        style={[styles.ColorInput, { backgroundColor: '#BFF491' }]}
+                        onPress={() => setListInputColor('#D1E7DD')}
+                        style={[styles.ColorInput, { backgroundColor: '#D1E7DD' }]}
                       />
                       <TouchableOpacity
-                        onPress={() => setListInputColor('#91DFF4')}
-                        style={[styles.ColorInput, { backgroundColor: '#91DFF4' }]}
+                        onPress={() => setListInputColor('#A5D8FF')}
+                        style={[styles.ColorInput, { backgroundColor: '#A5D8FF' }]}
                       />
                       <TouchableOpacity
-                        onPress={() => setListInputColor('#F491DF')}
-                        style={[styles.ColorInput, { backgroundColor: '#F491DF' }]}
+                        onPress={() => setListInputColor('#E7DFFD')}
+                        style={[styles.ColorInput, { backgroundColor: '#E7DFFD' }]}
                       />
                       <TouchableOpacity
-                        onPress={() => setListInputColor('#F49191')}
-                        style={[styles.ColorInput, { backgroundColor: '#F49191' }]}
+                        onPress={() => setListInputColor('#FFD8D8')}
+                        style={[styles.ColorInput, { backgroundColor: '#FFD8D8' }]}
                       />
                     </View>
                   </View>
@@ -217,7 +217,7 @@ export default function Home({ navigation }: { navigation: any }) {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFFFFF', // Branco suave
     height: '100%',
   },
   container: {
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFF',
+    backgroundColor: '#FFFFFF',
   },
   centeredView: {
     flex: 1,
@@ -241,47 +241,36 @@ const styles = StyleSheet.create({
   modalView: {
     margin: 0,
     zIndex: 10,
-    borderTopLeftRadius: 20,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     backgroundColor: '#FFFFFF',
-    borderTopRightRadius: 20,
-    boxShadow: '#00000001 0px 1px 3px 0px, #878787 0px 0px 1px 0px',
     padding: 20,
     width: '100%',
-    shadowColor: '#000000',
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 100,
-    shadowRadius: 4,
-    elevation: 8.5,
-  },
-  button: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    borderRadius: 20,
-    padding: 5,
-    elevation: 2,
-  },
-  buttonClose: {
-    backgroundColor: '#000',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 4,
   },
   ListInput: {
     height: 60,
     width: '80%',
-    borderRadius: 20,
+    borderRadius: 10,
     paddingVertical: 14,
-    backgroundColor: '#E0E4EA',
-    borderRightWidth: 10,
-    paddingLeft: 14,
+    backgroundColor: '#E9ECEF', // Cinza claro
+    borderLeftWidth: 8,
+    paddingLeft: 16,
     paddingRight: 24,
-    fontWeight: 'bold',
+    fontWeight: '500',
+    fontSize: 16,
+    color: '#343A40',
     textAlignVertical: 'center',
-    textAlign: 'left',
   },
   ListAddButton: {
-    backgroundColor: '#000000',
+    backgroundColor: '#000000', // Azul moderno
     width: 50,
     height: 50,
-    borderRadius: 20,
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -290,28 +279,22 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-
-  EmptyListWrapper: {
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    marginTop: '70%',
-  },
-
   ColorsWrapper: {
     margin: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-
   ColorInput: {
     width: 40,
     height: 40,
-    borderRadius: 20,
-    shadowColor: '#000000',
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 100,
-    shadowRadius: 4,
-    elevation: 0.5,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#DEE2E6',
+  },
+  EmptyListWrapper: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    marginTop: '60%',
   },
 });
