@@ -7,12 +7,12 @@ export type ItemCardProps = {
   Description: string;
   Quantity: number | string;
   Type: string;
-  onPress: () => void;
+  onEdit: () => void;
 };
 
 export default function ItemCard(props: ItemCardProps) {
   return (
-    <TouchableOpacity style={styles.Container} onPress={props.onPress}>
+    <View style={styles.Container}>
       <Text style={styles.TextBold}>{props.Description}</Text>
       <View style={styles.EditItemWrapper}>
         <View style={styles.QuantityWrapper}>
@@ -21,11 +21,11 @@ export default function ItemCard(props: ItemCardProps) {
             <Text style={styles.TypeText}>{props.Type}</Text>
           </Text>
         </View>
-        <TouchableOpacity style={styles.ItemEditButton}>
+        <TouchableOpacity onPress={props.onEdit} style={styles.ItemEditButton}>
           <FontAwesomeIcon color="#FFFFFF" size={15} icon={faPencil} />
         </TouchableOpacity>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 }
 

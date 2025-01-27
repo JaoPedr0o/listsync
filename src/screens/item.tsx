@@ -1,4 +1,13 @@
-import { faGears, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCheck,
+  faCircleXmark,
+  faClose,
+  faGears,
+  faPlusCircle,
+  faTrash,
+  faXmark,
+  faXmarkCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation } from '@react-navigation/native';
 import { doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
@@ -12,8 +21,12 @@ import {
   TouchableOpacity,
   View,
   Text,
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
 } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 
 import SvgEmptyItens from '~/assets/EmptyItens';
 import FooterList from '~/components/FooterList';
@@ -31,9 +44,12 @@ export default function Item({ route }: { route: any }) {
   const [listActivity, setListActivity] = useState(true);
   const [quantity, setQuantity] = useState('');
   const [listName, setListName] = useState('');
-  const [listColor, setListColor] = useState('');
   const [type, setType] = useState('Un.');
   const [loading, setLoading] = useState(false);
+  const [quantityEdit, setQuantityEdit] = useState('');
+  const [editItemId, setEditItemId] = useState('');
+  const [itemRefEdit, setItemRefEdit] = useState('');
+  const [editModalVisible, setEditModalVisible] = useState(false);
 
   interface ListItem {
     itemName: string;
@@ -78,7 +94,6 @@ export default function Item({ route }: { route: any }) {
             setListActivity(openedList.listActivity);
             setListItensCount(openedList.listItens.length);
             setListName(openedList.listName);
-            setListColor(openedList.listColor);
           }
         }
         setUserData(data);
@@ -127,7 +142,14 @@ export default function Item({ route }: { route: any }) {
     const user = auth.currentUser;
     if (user) {
       try {
-        if (itemRef !== '' && quantity === '0') {
+        if (
+          itemRef.length >= 3 &&
+          itemRef.length <= 20 &&
+          quantity.length !== 0 &&
+          quantity !== '0' &&
+          itemRef.trim() !== '' &&
+          quantity.trim() !== ''
+        ) {
           setLoading(true);
 
           // Acesso ao documento do usuário
@@ -160,13 +182,20 @@ export default function Item({ route }: { route: any }) {
               // Atualiza o documento do usuário com a lista modificada
               const updatedLists = [...userLists];
               updatedLists[listIndex] = updatedList; // Substitui a lista atualizada
-
               // Faz a atualização no Firestore
               await updateDoc(userRef, {
                 lists: updatedLists, // Substitui todo o array de listas
               });
 
-              Alert.alert('Item adicionado com sucesso!');
+              // Alert.alert('Item adicionado com sucesso!');
+              setTimeout(() => {
+                Toast.show({
+                  type: 'success',
+                  text1: 'Sucesso!',
+                  text2: 'A operação foi concluída com sucesso.',
+                  bottomOffset: 50,
+                });
+              }, 1000);
             } else {
               Alert.alert('Lista não encontrada');
             }
@@ -180,7 +209,9 @@ export default function Item({ route }: { route: any }) {
           setItemRef('');
           setQuantity('');
         } else {
-          Alert.alert('Digite um nome e quantidade para o item!');
+          Alert.alert(
+            'O nome do item deve ter entre 3 e 20 caracteres, e a quantidade não pode ser 0.'
+          );
         }
       } catch (error) {
         Alert.alert('Erro: ' + error);
@@ -288,6 +319,227 @@ export default function Item({ route }: { route: any }) {
     }
   };
 
+  const handleDeleteListItem = async (itemId: string) => {
+    const user = auth.currentUser;
+    if (user) {
+      try {
+        setLoading(true);
+
+        // Acesso ao documento do usuário
+        const userRef = doc(db, 'users', user.uid);
+
+        // Pega o documento do usuário
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+
+          // Garantir que o TypeScript saiba que userData.lists é um array de List
+          const userLists: List[] = userData.lists;
+
+          // Encontrar a lista com o listId específico
+          const listIndex = userLists.findIndex((list) => list.listId === listId);
+
+          if (listIndex !== -1) {
+            // A lista foi encontrada, agora vamos buscar o item com itemId
+            const updatedList = userLists[listIndex];
+            const itemIndex = updatedList.listItens.findIndex((item) => item.itemId === itemId);
+
+            if (itemIndex !== -1) {
+              // O item foi encontrado, agora vamos removê-lo
+              updatedList.listItens.splice(itemIndex, 1); // Remove o item
+
+              // Atualiza o documento do usuário com a lista modificada
+              const updatedLists = [...userLists];
+              updatedLists[listIndex] = updatedList; // Substitui a lista atualizada
+
+              // Faz a atualização no Firestore
+              await updateDoc(userRef, {
+                lists: updatedLists, // Substitui todo o array de listas
+              });
+
+              setEditModalVisible(false);
+              setEditItemId('');
+              setItemRefEdit('');
+              setQuantityEdit('');
+
+              // Notifica o sucesso
+              setTimeout(() => {
+                Toast.show({
+                  type: 'success',
+                  text1: 'Sucesso!',
+                  text2: 'O item foi removido com sucesso.',
+                  bottomOffset: 50,
+                });
+              }, 1000);
+            } else {
+              Alert.alert('Item não encontrado na lista.');
+            }
+          } else {
+            Alert.alert('Lista não encontrada');
+          }
+
+          loadData();
+        } else {
+          Alert.alert('Usuário não encontrado');
+        }
+
+        setLoading(false);
+      } catch (error) {
+        Alert.alert('Erro: ' + error);
+        setLoading(false);
+      }
+    } else {
+      Alert.alert('Usuário não autenticado');
+    }
+  };
+
+  const handleOpenModalEdit = async (itemId: string) => {
+    const user = auth.currentUser;
+    if (user) {
+      try {
+        // Acesso ao documento do usuário
+        const userRef = doc(db, 'users', user.uid);
+
+        // Pega o documento do usuário
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+
+          // Garantir que o TypeScript saiba que userData.lists é um array de List
+          const userLists: List[] = userData.lists;
+
+          // Encontrar a lista com o listId específico
+          const listIndex = userLists.findIndex((list) => list.listId === listId);
+
+          if (listIndex !== -1) {
+            // A lista foi encontrada, agora vamos procurar o item com itemId
+            const updatedList = userLists[listIndex];
+            const item = updatedList.listItens.find((item) => item.itemId === itemId);
+
+            if (item) {
+              setItemRefEdit(item.itemName);
+              setQuantityEdit(item.itemQuantity);
+              setType(item.itemType);
+              setEditItemId(item.itemId);
+              setEditModalVisible(true);
+            } else {
+              Alert.alert('Item não encontrado');
+            }
+          } else {
+            Alert.alert('Lista não encontrada');
+          }
+        } else {
+          Alert.alert('Usuário não encontrado');
+        }
+      } catch (error) {
+        Alert.alert('Erro: ' + error);
+      }
+    } else {
+      Alert.alert('Usuário não autenticado');
+    }
+  };
+
+  const handleUpdateListItem = async (itemId: string) => {
+    const user = auth.currentUser;
+    if (user) {
+      try {
+        if (
+          itemRef.length >= 3 &&
+          itemRef.length <= 20 &&
+          quantity.length !== 0 &&
+          quantity !== '0' &&
+          itemRef.trim() !== '' &&
+          quantity.trim() !== ''
+        ) {
+          setLoading(true);
+
+          // Acesso ao documento do usuário
+          const userRef = doc(db, 'users', user.uid);
+
+          // Estrutura do item a ser atualizado
+          const updatedItemData: ListItem = {
+            itemName: itemRefEdit,
+            itemId, // Manter o itemId original
+            itemQuantity: quantityEdit,
+            itemType: type,
+          };
+
+          // Pega o documento do usuário
+          const userSnap = await getDoc(userRef);
+          if (userSnap.exists()) {
+            const userData = userSnap.data();
+
+            // Garantir que o TypeScript saiba que userData.lists é um array de List
+            const userLists: List[] = userData.lists;
+
+            // Encontrar a lista com o listId específico
+            const listIndex = userLists.findIndex((list) => list.listId === listId);
+
+            if (listIndex !== -1) {
+              // A lista foi encontrada, agora vamos buscar o item com itemId
+              const updatedList = userLists[listIndex];
+              const itemIndex = updatedList.listItens.findIndex((item) => item.itemId === itemId);
+
+              if (itemIndex !== -1) {
+                // O item foi encontrado, vamos atualizar as propriedades
+                updatedList.listItens[itemIndex] = updatedItemData;
+
+                // Atualiza o documento do usuário com a lista modificada
+                const updatedLists = [...userLists];
+                updatedLists[listIndex] = updatedList; // Substitui a lista atualizada
+                // Faz a atualização no Firestore
+                await updateDoc(userRef, {
+                  lists: updatedLists, // Substitui todo o array de listas
+                });
+
+                setEditModalVisible(false);
+
+                // Notifica o sucesso
+                setTimeout(() => {
+                  Toast.show({
+                    type: 'success',
+                    text1: 'Sucesso!',
+                    text2: 'O item foi atualizado com sucesso.',
+                    bottomOffset: 50,
+                  });
+                }, 1000);
+              } else {
+                Alert.alert('Item não encontrado na lista.');
+              }
+            } else {
+              Alert.alert('Lista não encontrada');
+            }
+
+            loadData();
+          } else {
+            Alert.alert('Usuário não encontrado');
+          }
+
+          setLoading(false);
+          setEditItemId('');
+          setItemRefEdit('');
+          setQuantityEdit('');
+        } else {
+          Alert.alert(
+            'O nome do item deve ter entre 3 e 20 caracteres, e a quantidade não pode ser 0.'
+          );
+        }
+      } catch (error) {
+        Alert.alert('Erro: ' + error);
+        setLoading(false);
+      }
+    } else {
+      Alert.alert('Usuário não autenticado');
+    }
+  };
+
+  const closeModal = () => {
+    setEditModalVisible(false);
+    setEditItemId('');
+    setItemRefEdit('');
+    setQuantityEdit('');
+  };
+
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -297,7 +549,7 @@ export default function Item({ route }: { route: any }) {
   }
 
   return (
-    <View style={styles.mainContainer}>
+    <View style={styles.MainContainer}>
       <View style={styles.Container}>
         <Text style={[styles.ListNameTitle]}>{listName}</Text>
         <View style={styles.AddItemContainer}>
@@ -310,7 +562,6 @@ export default function Item({ route }: { route: any }) {
             keyboardType="default"
           />
           <View style={styles.WrapperType}>
-            <Text style={styles.TypeIndicator}>{type}</Text>
             <TextInput
               style={styles.Input}
               value={quantity}
@@ -320,6 +571,7 @@ export default function Item({ route }: { route: any }) {
               keyboardType="decimal-pad"
             />
             <TouchableOpacity style={styles.ListTypeButton} onPress={toggleItemType}>
+              {editModalVisible === false && <Text style={styles.TypeIndicator}>{type}</Text>}
               <FontAwesomeIcon color="#FFFFFF" size={20} icon={faGears} />
             </TouchableOpacity>
           </View>
@@ -334,7 +586,7 @@ export default function Item({ route }: { route: any }) {
             renderItem={({ item }) => (
               <ItemCard
                 Quantity={item.itemQuantity}
-                onPress={() => {}}
+                onEdit={() => handleOpenModalEdit(item.itemId)}
                 Type={item.itemType}
                 Description={item.itemName}
               />
@@ -346,6 +598,62 @@ export default function Item({ route }: { route: any }) {
               </View>
             }
           />
+          <Toast />
+          <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <Modal
+              animationType="slide"
+              transparent
+              visible={editModalVisible}
+              onRequestClose={closeModal}>
+              <View style={styles.ModalView}>
+                <View style={styles.EditTitleWrapper}>
+                  <Text style={styles.SmallWhiteTextBold}>Edição de Item</Text>
+                  <TouchableOpacity
+                    style={styles.CloseModalButton}
+                    hitSlop={25}
+                    onPress={() => closeModal()}>
+                    <FontAwesomeIcon color="#000000" size={18} icon={faXmark} />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.AddItemContainer}>
+                  <TextInput
+                    style={styles.MainInput}
+                    value={itemRefEdit}
+                    onChangeText={setItemRefEdit}
+                    placeholder="Item"
+                    placeholderTextColor="#878787"
+                    keyboardType="default"
+                  />
+                  <View style={styles.WrapperType}>
+                    <TextInput
+                      style={styles.Input}
+                      value={quantityEdit}
+                      onChangeText={setQuantityEdit}
+                      placeholder="0"
+                      placeholderTextColor="#878787"
+                      keyboardType="decimal-pad"
+                    />
+                    <TouchableOpacity style={styles.ListTypeButton} onPress={toggleItemType}>
+                      <Text style={styles.TypeIndicator}>{type}</Text>
+                      <FontAwesomeIcon color="#FFFFFF" size={20} icon={faGears} />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                <View style={styles.EditButtonWrapper}>
+                  <TouchableOpacity
+                    style={styles.EditListDeleteButton}
+                    onPress={() => handleDeleteListItem(editItemId)}>
+                    <FontAwesomeIcon color="#FFFFFF" size={20} icon={faTrash} />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.EditItemButton}
+                    onPress={() => handleUpdateListItem(editItemId)}>
+                    <FontAwesomeIcon color="#FFFFFF" size={20} icon={faCheck} />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
+          </KeyboardAvoidingView>
           <SafeAreaView />
         </SafeAreaProvider>
       </View>
@@ -361,7 +669,7 @@ export default function Item({ route }: { route: any }) {
 }
 
 const styles = StyleSheet.create({
-  mainContainer: {
+  MainContainer: {
     flex: 1,
     backgroundColor: '#FFFFFF',
     height: '100%',
@@ -406,6 +714,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
+  SmallWhiteTextBold: {
+    fontSize: 14,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+
   GrayTextBold: {
     fontSize: 14,
     color: '#000',
@@ -422,7 +736,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     maxWidth: 160,
     minWidth: 160,
-    fontWeight: '900',
+    fontWeight: 'bold',
     flex: 1,
   },
 
@@ -452,7 +766,7 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 12,
     width: 75,
-    fontWeight: '900',
+    fontWeight: 'bold',
     flex: 1,
   },
 
@@ -460,7 +774,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 30,
+    width: 45,
     height: 50,
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
@@ -482,13 +796,72 @@ const styles = StyleSheet.create({
   },
 
   TypeIndicator: {
-    position: 'absolute',
     zIndex: 3,
     fontWeight: '900',
     fontSize: 12,
-    right: 30,
     padding: 2,
+    color: '#FFFFFF',
     margin: 2,
     borderRadius: 5,
+  },
+
+  ModalView: {
+    position: 'absolute',
+    top: '50%',
+    margin: 0,
+    zIndex: 10,
+    borderRadius: 10,
+    backgroundColor: '#FFFFFF',
+    padding: 20,
+    width: 300,
+    alignSelf: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 4,
+    transform: [{ translateY: -100 }],
+  },
+
+  EditButtonWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexBasis: 4,
+    gap: 5,
+  },
+
+  EditTitleWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexBasis: 4,
+    gap: 5,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: '#000000',
+  },
+
+  EditItemButton: {
+    backgroundColor: '#000000',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 50,
+    flex: 3,
+    borderRadius: 10,
+  },
+
+  EditListDeleteButton: {
+    backgroundColor: '#D32F2F',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 50,
+    flex: 1,
+    borderRadius: 10,
+  },
+
+  CloseModalButton: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    width: 18,
+    height: 18,
   },
 });

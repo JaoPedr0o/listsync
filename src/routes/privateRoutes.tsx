@@ -2,7 +2,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 
 import DrawerNavigator from './drawer-navigator';
-import Modal from '../screens/modal';
 
 import Avatar from '~/components/Avatar';
 import Item from '~/screens/item';
@@ -37,11 +36,6 @@ export default function PrivateRoutes() {
           headerTitleStyle: { fontSize: 20, fontWeight: '900' },
           headerRight: () => <Avatar />,
         }}
-      />
-      <Stack.Screen
-        name="Modal"
-        component={Modal}
-        options={{ presentation: 'modal', headerLeft: () => null }}
       />
     </Stack.Navigator>
   );
