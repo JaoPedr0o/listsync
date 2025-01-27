@@ -20,25 +20,30 @@ export default function FooterList(props: FooterListProps) {
   const [isEnable] = useState(props.enable);
   return (
     <View style={styles.Container}>
-      {props.isListItems ? 
+      {props.isListItems ? (
         <View style={styles.WrapperFooterItemList}>
           <View style={styles.WrapperText}>
-            {props.enable ? <Text style={styles.ActiveText}>COMPRA</Text> : <Text style={styles.InativeText}>EDIÇÃO</Text>}
-            <Text style={styles.SmalltextBold}>{props.items ? props.items : "0"} itens</Text>
+            {props.enable ? (
+              <Text style={styles.ActiveText}>COMPRA</Text>
+            ) : (
+              <Text style={styles.InativeText}>EDIÇÃO</Text>
+            )}
+            <Text style={styles.SmalltextBold}>{props.items ? props.items : '0'} itens</Text>
           </View>
           <TouchableOpacity onPress={props.onDelete} style={styles.ActionButton}>
-            <FontAwesomeIcon color="#FFFFFF" size={20} icon={faTrash} />  
-          </TouchableOpacity> 
+            <FontAwesomeIcon color="#FFFFFF" size={20} icon={faTrash} />
+          </TouchableOpacity>
           <TouchableOpacity style={styles.ActionButton}>
-            <FontAwesomeIcon color="#FFFFFF" size={20} icon={faFilePdf} />  
-          </TouchableOpacity> 
+            <FontAwesomeIcon color="#FFFFFF" size={20} icon={faFilePdf} />
+          </TouchableOpacity>
           <TouchableOpacity style={styles.ActionButton}>
-            <FontAwesomeIcon color="#FFFFFF" size={20} icon={faShareNodes} />  
-          </TouchableOpacity> 
-          <CustomSwitch isActive={isEnable} onToggle={props.toggle}/>
-        </View> 
-      : 
-        <Button onPress={props.onPress} title="NOVA LISTA" />}
+            <FontAwesomeIcon color="#FFFFFF" size={20} icon={faShareNodes} />
+          </TouchableOpacity>
+          <CustomSwitch isActive={isEnable} onToggle={props.toggle} />
+        </View>
+      ) : (
+        <Button onPress={props.onPress} title="NOVA LISTA" />
+      )}
     </View>
   );
 }
@@ -67,7 +72,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
   WrapperText: {
@@ -77,13 +82,13 @@ const styles = StyleSheet.create({
   },
 
   ActiveText: {
-    color: "#59BF69",
+    color: '#59BF69',
     fontWeight: '900',
     fontSize: 16,
   },
 
   InativeText: {
-    color: "#878787",
+    color: '#878787',
     fontWeight: '900',
     fontSize: 16,
   },
