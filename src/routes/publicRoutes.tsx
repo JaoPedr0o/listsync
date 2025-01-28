@@ -1,8 +1,8 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 
-import Register from '~/screens/login';
-import Login from '~/screens/register';
+import Register from '~/screens/Login/login';
+import Login from '~/screens/Register/register';
 
 export type RootStackParamList = {
   DrawerNavigator: undefined;

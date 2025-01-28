@@ -4,7 +4,7 @@ import React from 'react';
 import DrawerNavigator from './drawer-navigator';
 
 import Avatar from '~/components/Avatar';
-import Item from '~/screens/item';
+import Item from '~/screens/Item/item';
 
 export type RootStackParamList = {
   DrawerNavigator: undefined;

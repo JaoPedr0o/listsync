@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
-import { logOut } from '~/utils/functions/logout';
+import { logOut } from '~/services/logout';
 
 export default function Avatar() {
   return (

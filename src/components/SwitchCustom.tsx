@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, Animated, StyleSheet } from 'react-native';
 
 interface CustomSwitchProps {
@@ -10,6 +10,18 @@ const CustomSwitch: React.FC<CustomSwitchProps> = ({ isActive = false, onToggle 
   const [active, setActive] = useState(isActive);
   const toggleAnimation = new Animated.Value(isActive ? 1 : 0);
 
+  useEffect(() => {
+    // Sincronizando o estado interno 'active' com a prop 'isActive' sempre que ela mudar
+    if (isActive !== active) {
+      setActive(isActive);
+      Animated.timing(toggleAnimation, {
+        toValue: isActive ? 1 : 0,
+        duration: 300,
+        useNativeDriver: false,
+      }).start();
+    }
+  }, [isActive]); // Reage a mudanças na prop isActive
+
   const toggleSwitch = () => {
     const newValue = !active;
     setActive(newValue);
@@ -20,6 +32,7 @@ const CustomSwitch: React.FC<CustomSwitchProps> = ({ isActive = false, onToggle 
       useNativeDriver: false,
     }).start();
 
+    // Passa o novo valor para o pai, se a função onToggle for fornecida
     if (onToggle) {
       onToggle(newValue);
     }

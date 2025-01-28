@@ -4,7 +4,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
 
 import { RootStackParamList } from '.';
-import Home from '../screens/home';
+import Home from '../screens/Home/home';
 
 import Avatar from '~/components/Avatar';
 
