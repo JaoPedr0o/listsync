@@ -240,7 +240,7 @@ export default function Item({ route }: { route: any }) {
             />
             <TouchableOpacity style={styles.ListTypeButton} onPress={toggleItemType}>
               {editModalVisible === false && <Text style={styles.TypeIndicator}>{type}</Text>}
-              <FontAwesome name="gears" size={15} color="#FFFFFF" />
+              <FontAwesome name="gears" size={20} color="#FFFFFF" />
             </TouchableOpacity>
           </View>
           <TouchableOpacity style={styles.ListAddButton} onPress={handleAddItem}>
@@ -280,7 +280,7 @@ export default function Item({ route }: { route: any }) {
                     style={styles.CloseModalButton}
                     hitSlop={25}
                     onPress={() => closeModal()}>
-                    <FontAwesome name="close" size={15} color="#000000" />
+                    <FontAwesome name="close" size={18} color="#000000" />
                   </TouchableOpacity>
                 </View>
                 <View style={styles.AddItemContainer}>
@@ -303,7 +303,7 @@ export default function Item({ route }: { route: any }) {
                     />
                     <TouchableOpacity style={styles.ListTypeButton} onPress={toggleItemType}>
                       <Text style={styles.TypeIndicator}>{type}</Text>
-                      <FontAwesome name="gears" size={15} color="#FFFFFF" />
+                      <FontAwesome name="plus-circle" size={20} color="#FFFFFF" />
                     </TouchableOpacity>
                   </View>
                 </View>

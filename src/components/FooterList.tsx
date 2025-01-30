@@ -16,29 +16,39 @@ type FooterListProps = {
 };
 
 export default function FooterList(props: FooterListProps) {
-  const [isEnable] = useState(props.enable);
+  const [isEnable, setIsEnable] = useState(props.enable); // Controlar o estado localmente
+  
+  // Função para alternar o estado
+  const handleToggle = () => {
+    const newValue = !isEnable;
+    setIsEnable(newValue);
+    if (props.toggle) {
+      props.toggle(); // Se houver uma função `toggle` no props, chama ela
+    }
+  };
+
   return (
     <View style={styles.Container}>
       {props.isListItems ? (
         <View style={styles.WrapperFooterItemList}>
           <View style={styles.WrapperText}>
-            {props.enable ? (
+            {isEnable ? (
               <Text style={styles.ActiveText}>COMPRA</Text>
             ) : (
               <Text style={styles.InativeText}>EDIÇÃO</Text>
             )}
             <Text style={styles.SmalltextBold}>{props.items ? props.items : '0'} itens</Text>
           </View>
-          <TouchableOpacity onPress={props.onDelete} style={styles.ActionButton}>
+          <TouchableOpacity onPress={props.onDelete} style={styles.ActionDeleteButton}>
             <FontAwesome name="trash" size={20} color="#FFFFFF" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.ActionButton}>
             <FontAwesome name="file-pdf-o" size={20} color="#FFFFFF" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.ActionButton}>
-            <FontAwesome name="share" size={20} color="#FFFFFF" />
+            <FontAwesome name="share-alt" size={20} color="#FFFFFF" />
           </TouchableOpacity>
-          <CustomSwitch isActive={isEnable} onToggle={props.toggle} />
+          <CustomSwitch isActive={isEnable} onToggle={handleToggle} />
         </View>
       ) : (
         <Button onPress={props.onPress} title="NOVA LISTA" />
@@ -116,10 +126,30 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 5,
     height: 40,
+    width: 40,
     flexDirection: 'row',
     justifyContent: 'center',
     padding: 10,
     shadowColor: '#000',
+    shadowOffset: {
+      height: 2,
+      width: 0,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+
+  ActionDeleteButton: {
+    alignItems: 'center',
+    backgroundColor: '#D32F2F',
+    borderRadius: 10,
+    elevation: 5,
+    height: 40,
+    width: 40,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    padding: 10,
+    shadowColor: '#D32F2F',
     shadowOffset: {
       height: 2,
       width: 0,

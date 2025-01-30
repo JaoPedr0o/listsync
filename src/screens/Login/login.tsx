@@ -10,8 +10,8 @@ import { ButtonInlined } from '~/components/ButtonInlined';
 import { auth } from '~/services/firebase';
 
 export default function Login({ navigation }: { navigation: any }) {
-  const [password, setPassword] = useState('123456');
-  const [email, setEmail] = useState('joaopedromp15@outlook.com');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
 
   // Função para validar os campos de login
@@ -48,8 +48,7 @@ export default function Login({ navigation }: { navigation: any }) {
         <SvgLogo />
         <Text style={styles.LargeTextBlack}>OLÁ!</Text>
         <Text style={styles.SmallTextBlack}>
-          Entre em sua conta ou <Text style={styles.SmallTextGreen}>CLIQUE AQUI</Text> para
-          continuar sem cadastro.{' '}
+          Bem-vindo de volta! Entre com sua conta para acessar suas listas de compras.{' '}
         </Text>
         {loading && <ActivityIndicator style={styles.ActiveIndicator} size="large" color="#000" />}
       </View>
