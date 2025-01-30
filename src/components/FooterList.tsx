@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { faTrash, faFilePdf, faShareNodes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { FontAwesome } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -31,13 +30,13 @@ export default function FooterList(props: FooterListProps) {
             <Text style={styles.SmalltextBold}>{props.items ? props.items : '0'} itens</Text>
           </View>
           <TouchableOpacity onPress={props.onDelete} style={styles.ActionButton}>
-            <FontAwesomeIcon color="#FFFFFF" size={20} icon={faTrash} />
+            <FontAwesome name="trash" size={20} color="#FFFFFF" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.ActionButton}>
-            <FontAwesomeIcon color="#FFFFFF" size={20} icon={faFilePdf} />
+            <FontAwesome name="file-pdf-o" size={20} color="#FFFFFF" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.ActionButton}>
-            <FontAwesomeIcon color="#FFFFFF" size={20} icon={faShareNodes} />
+            <FontAwesome name="share" size={20} color="#FFFFFF" />
           </TouchableOpacity>
           <CustomSwitch isActive={isEnable} onToggle={props.toggle} />
         </View>

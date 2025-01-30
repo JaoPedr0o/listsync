@@ -34,7 +34,6 @@ export default function Login({ navigation }: { navigation: any }) {
         setLoading(false);
         setEmail('');
         setPassword('');
-        navigation.navigate('PrivateRoutes');
       })
       .catch((error) => {
         setLoading(false);

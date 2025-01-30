@@ -1,5 +1,4 @@
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useFocusEffect } from '@react-navigation/native';
 import * as NavigationBar from 'expo-navigation-bar';
 import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
@@ -173,7 +172,7 @@ export default function Home({ navigation }: { navigation: any }) {
                         autoFocus
                       />
                       <TouchableOpacity style={styles.ListAddButton} onPress={addToLists}>
-                        <FontAwesomeIcon color="#FFFFFF" size={20} icon={faPlusCircle} />
+                        <FontAwesome name="plus-circle" size={20} color="#FFFFFF" />
                       </TouchableOpacity>
                     </View>
                     <View style={styles.ColorsWrapper}>

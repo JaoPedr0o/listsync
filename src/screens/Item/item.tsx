@@ -1,11 +1,4 @@
-import {
-  faCheck,
-  faGears,
-  faPlusCircle,
-  faTrash,
-  faXmark,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
@@ -247,11 +240,11 @@ export default function Item({ route }: { route: any }) {
             />
             <TouchableOpacity style={styles.ListTypeButton} onPress={toggleItemType}>
               {editModalVisible === false && <Text style={styles.TypeIndicator}>{type}</Text>}
-              <FontAwesomeIcon color="#FFFFFF" size={20} icon={faGears} />
+              <FontAwesome name="gears" size={15} color="#FFFFFF" />
             </TouchableOpacity>
           </View>
           <TouchableOpacity style={styles.ListAddButton} onPress={handleAddItem}>
-            <FontAwesomeIcon color="#FFFFFF" size={20} icon={faPlusCircle} />
+            <FontAwesome name="plus-circle" size={20} color="#FFFFFF" />
           </TouchableOpacity>
         </View>
         <SafeAreaProvider>
@@ -287,7 +280,7 @@ export default function Item({ route }: { route: any }) {
                     style={styles.CloseModalButton}
                     hitSlop={25}
                     onPress={() => closeModal()}>
-                    <FontAwesomeIcon color="#000000" size={18} icon={faXmark} />
+                    <FontAwesome name="close" size={15} color="#000000" />
                   </TouchableOpacity>
                 </View>
                 <View style={styles.AddItemContainer}>
@@ -310,7 +303,7 @@ export default function Item({ route }: { route: any }) {
                     />
                     <TouchableOpacity style={styles.ListTypeButton} onPress={toggleItemType}>
                       <Text style={styles.TypeIndicator}>{type}</Text>
-                      <FontAwesomeIcon color="#FFFFFF" size={20} icon={faGears} />
+                      <FontAwesome name="gears" size={15} color="#FFFFFF" />
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -318,12 +311,12 @@ export default function Item({ route }: { route: any }) {
                   <TouchableOpacity
                     style={styles.EditListDeleteButton}
                     onPress={() => handleDeleteItem(editItemId)}>
-                    <FontAwesomeIcon color="#FFFFFF" size={20} icon={faTrash} />
+                    <FontAwesome name="trash" size={20} color="#FFFFFF" />
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.EditItemButton}
                     onPress={() => handleUpdateItem(listId, editItemId)}>
-                    <FontAwesomeIcon color="#FFFFFF" size={20} icon={faCheck} />
+                    <FontAwesome name="check" size={20} color="#FFFFFF" />
                   </TouchableOpacity>
                 </View>
               </View>

@@ -191,6 +191,8 @@ export const styles = StyleSheet.create({
   },
 
   CloseModalButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'white',
     borderRadius: 10,
     width: 18,

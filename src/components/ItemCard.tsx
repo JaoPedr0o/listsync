@@ -1,5 +1,4 @@
-import { faPencil } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -22,7 +21,7 @@ export default function ItemCard(props: ItemCardProps) {
           </Text>
         </View>
         <TouchableOpacity onPress={props.onEdit} style={styles.ItemEditButton}>
-          <FontAwesomeIcon color="#FFFFFF" size={15} icon={faPencil} />
+          <FontAwesome name="pencil" size={15} color="#FFFFFF" />
         </TouchableOpacity>
       </View>
     </View>

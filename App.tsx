@@ -11,7 +11,7 @@ export default function App() {
   }, []);
   return (
     <>
-      <StatusBar barStyle={'dark-content'} animated />
+      <StatusBar barStyle={'dark-content'} animated backgroundColor={'white'} />
       <RootStack />
     </>
   );

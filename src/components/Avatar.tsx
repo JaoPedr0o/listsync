@@ -1,5 +1,4 @@
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
@@ -8,7 +7,7 @@ import { logOut } from '~/services/logout';
 export default function Avatar() {
   return (
     <TouchableOpacity style={styles.Container} onPress={() => logOut()}>
-      <FontAwesomeIcon color="#FFFFFF" size={14} icon={faUser} />
+      <FontAwesome name="user" size={14} color="#FFFFFF" />
     </TouchableOpacity>
   );
 }
