@@ -11,17 +11,18 @@ import {
   Modal,
   TouchableOpacity,
   TextInput,
-  Alert,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 
 import { styles } from './home.style';
 
 import SvgEmptyList from '~/assets/EmptyList';
 import FooterList from '~/components/FooterList';
 import ListCard from '~/components/ListCard';
+import { toastConfig } from '~/components/Toast';
 import HeaderContentInfo from '~/components/headerContentInfo';
 import { auth, db } from '~/services/firebase';
 import { getUserData } from '~/services/functions';
@@ -43,11 +44,19 @@ export default function Home({ navigation }: { navigation: any }) {
         setUserData(data);
         setLoading(false);
       } catch (error) {
-        Alert.alert('Erro ao buscar listas:' + error);
+        Toast.show({
+          type: 'error',
+          text1: 'Erro ao buscar listas!',
+          text2: 'Erro:' + error,
+        });
         setLoading(false);
       }
     } else {
-      Alert.alert('Usuário não autenticado');
+      Toast.show({
+        type: 'error',
+        text1: 'Usuário não authenticado!',
+        text2: 'Faça login ou crie uma conta.',
+      });
       setLoading(false);
     }
   };
@@ -90,7 +99,13 @@ export default function Home({ navigation }: { navigation: any }) {
           await updateDoc(userRef, {
             lists: arrayUnion(listData),
           });
-          Alert.alert('Nova lista criada com sucesso!');
+          setTimeout(() => {
+            Toast.show({
+              type: 'success',
+              text1: 'Sucesso!',
+              text2: 'Nova lista criada.',
+            });
+          }, 300);
           navigation.navigate('Item', { listId: listData.listId });
           loadData();
           setLoading(false);
@@ -98,14 +113,26 @@ export default function Home({ navigation }: { navigation: any }) {
           setModalVisible(false);
           setListInputColor('#E0E4EA');
         } else {
-          Alert.alert('Digite um nome para a lista entre 5 e 30 caracteres!');
+          Toast.show({
+            type: 'info',
+            text1: 'Nome Imcopatível!',
+            text2: 'Digite um nome para a lista entre 5 e 30 caracteres.',
+          });
         }
       } catch (error) {
-        Alert.alert('Erro ao adicionar item ao array: ' + error);
+        Toast.show({
+          type: 'error',
+          text1: 'Erro ao criar lista!',
+          text2: 'Erro:' + error,
+        });
         setLoading(false);
       }
     } else {
-      Alert.alert('Usuário não autenticado');
+      Toast.show({
+        type: 'error',
+        text1: 'Usuário não authenticado!',
+        text2: 'Faça login ou crie uma conta.',
+      });
     }
   };
 
@@ -148,7 +175,7 @@ export default function Home({ navigation }: { navigation: any }) {
                 </View>
               }
             />
-
+            <Toast config={toastConfig} />
             <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
               <Modal
                 animationType="slide"

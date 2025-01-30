@@ -2,7 +2,6 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
-  Alert,
   FlatList,
   TextInput,
   TouchableOpacity,
@@ -22,6 +21,7 @@ import ItemSkeleton from './itemSkeletom';
 import SvgEmptyItens from '~/assets/EmptyItens';
 import FooterList from '~/components/FooterList';
 import ItemCard from '~/components/ItemCard';
+import { toastConfig } from '~/components/Toast';
 import {
   addItemToList,
   deleteItemFromList,
@@ -79,7 +79,13 @@ export default function Item({ route }: { route: any }) {
       setUserData(userData);
       setLoading(false);
     } catch (error) {
-      Alert.alert('Erro ao carregar dados' + error);
+      setTimeout(() => {
+        Toast.show({
+          type: 'error',
+          text1: 'Erro ao carregar dados!',
+          text2: 'Erro:' + error,
+        });
+      }, 300);
       setLoading(false);
     }
   };
@@ -89,11 +95,23 @@ export default function Item({ route }: { route: any }) {
 
     try {
       await deleteListFromUser(listId);
+      setTimeout(() => {
+        Toast.show({
+          type: 'success',
+          text1: 'Sucesso!',
+          text2: 'Lista Deletada.',
+        });
+      }, 300);
 
-      Alert.alert('Lista deletada com sucesso!');
       navigation.goBack();
     } catch (error) {
-      Alert.alert('Erro ao deletar a lista: ' + error);
+      setTimeout(() => {
+        Toast.show({
+          type: 'error',
+          text1: 'Erro ao deletar lista!',
+          text2: 'Erro:' + error,
+        });
+      }, 300);
     } finally {
       setLoading(false);
     }
@@ -101,7 +119,13 @@ export default function Item({ route }: { route: any }) {
 
   const handleAddItem = async () => {
     if (!isValidItemName(itemRef) || !isValidQuantity(quantity)) {
-      Alert.alert('Erro', 'Nome ou quantidade inválidos');
+      setTimeout(() => {
+        Toast.show({
+          type: 'error',
+          text1: 'Nome ou quantidade inválidos!',
+          text2: 'Nome: 3 a 20 caracteres. Informe a quantidade.',
+        });
+      }, 300);
       return;
     }
 
@@ -112,20 +136,41 @@ export default function Item({ route }: { route: any }) {
         itemType: type,
         itemId: generateUnicId(),
       };
+
       await addItemToList(listId, itemData);
+      setTimeout(() => {
+        Toast.show({
+          type: 'success',
+          text1: 'Sucesso!',
+          text2: 'Item Adicionado.',
+        });
+      }, 300);
+
       setItemRef('');
       setQuantity('');
       loadData();
-      Alert.alert('Item Adicionado!');
     } catch (error) {
-      Alert.alert('Erro ao adicionar item' + error);
+      console.log('Erro ao adicionar item:', error);
+      setTimeout(() => {
+        Toast.show({
+          type: 'error',
+          text1: 'Erro ao adicionar item!',
+          text2: 'Ocorreu um problema. Tente novamente.',
+        });
+      }, 300);
     }
   };
 
   const handleUpdateItem = async (listId: string, itemId: string) => {
     if (!isValidItemName(itemRefEdit) || !isValidQuantity(quantityEdit)) {
       closeModal();
-      Alert.alert('Erro', 'Nome ou quantidade inválidos');
+      setTimeout(() => {
+        Toast.show({
+          type: 'error',
+          text1: 'Nome ou quantidade inválidos!',
+          text2: 'Nome: 3 a 20 caracteres. Informe a quantidade.',
+        });
+      }, 300);
       return;
     }
     setLoading(true);
@@ -145,9 +190,21 @@ export default function Item({ route }: { route: any }) {
       setQuantityEdit('');
       loadData();
       closeModal();
-      Alert.alert('Item atualizado com sucesso!');
+      setTimeout(() => {
+        Toast.show({
+          type: 'success',
+          text1: 'Sucesso!',
+          text2: 'Item Atualizado.',
+        });
+      }, 300);
     } catch (error) {
-      Alert.alert('Erro ao atualizar o item: ' + error);
+      setTimeout(() => {
+        Toast.show({
+          type: 'error',
+          text1: 'Erro ao atualizar item!',
+          text2: 'Erro:' + error,
+        });
+      }, 300);
     } finally {
       setLoading(false);
     }
@@ -160,9 +217,21 @@ export default function Item({ route }: { route: any }) {
       setQuantity('');
       closeModal();
       loadData();
-      Alert.alert('Item Deletado!');
+      setTimeout(() => {
+        Toast.show({
+          type: 'success',
+          text1: 'Sucesso!',
+          text2: 'Item Deletado.',
+        });
+      }, 300);
     } catch (error) {
-      Alert.alert('Erro ao deletar item' + error);
+      setTimeout(() => {
+        Toast.show({
+          type: 'error',
+          text1: 'Erro ao deletar item!',
+          text2: 'Erro:' + error,
+        });
+      }, 300);
     }
   };
 
@@ -171,7 +240,13 @@ export default function Item({ route }: { route: any }) {
       const updatedActivity = await toggleListActivity(listId);
       setListActivity(updatedActivity);
     } catch (error) {
-      Alert.alert('Erro ao alterar atividade da lista: ' + error);
+      setTimeout(() => {
+        Toast.show({
+          type: 'error',
+          text1: 'Erro ao alterar modo!',
+          text2: 'Erro:' + error,
+        });
+      }, 300);
     }
   };
 
@@ -184,7 +259,13 @@ export default function Item({ route }: { route: any }) {
       setEditItemId(item.itemId);
       setEditModalVisible(true);
     } catch (error) {
-      Alert.alert('Erro: ' + error);
+      setTimeout(() => {
+        Toast.show({
+          type: 'error',
+          text1: 'Erro!',
+          text2: 'Erro:' + error,
+        });
+      }, 300);
     }
   };
 
@@ -266,7 +347,7 @@ export default function Item({ route }: { route: any }) {
               </View>
             }
           />
-          <Toast />
+          <Toast config={toastConfig} />
           <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <Modal
               animationType="slide"

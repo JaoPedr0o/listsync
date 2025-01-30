@@ -1,12 +1,14 @@
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
-import { View, Text, TextInput, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, TextInput, ActivityIndicator } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 import { styles } from './login.style';
 
 import SvgLogo from '~/assets/Logo';
 import { Button } from '~/components/Button';
 import { ButtonInlined } from '~/components/ButtonInlined';
+import { toastConfig } from '~/components/Toast';
 import { auth } from '~/services/firebase';
 
 export default function Login({ navigation }: { navigation: any }) {
@@ -14,16 +16,18 @@ export default function Login({ navigation }: { navigation: any }) {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Função para validar os campos de login
   function validateInputs() {
     if (email.length === 0 || password.length === 0) {
-      Alert.alert('Preencha os campos!');
+      Toast.show({
+        type: 'info',
+        text1: 'Campos Obrigatórios!',
+        text2: 'Por favor, preencha os campos.',
+      });
       return false;
     }
     return true;
   }
 
-  // Função para fazer login
   function login() {
     if (!validateInputs()) return;
 
@@ -38,7 +42,11 @@ export default function Login({ navigation }: { navigation: any }) {
       .catch((error) => {
         setLoading(false);
         const errorMessage = error.message;
-        Alert.alert('Erro ao logar', errorMessage);
+        Toast.show({
+          type: 'error',
+          text1: 'Erro ao Logar!',
+          text2: 'Erro:' + errorMessage,
+        });
       });
   }
 
@@ -74,6 +82,7 @@ export default function Login({ navigation }: { navigation: any }) {
         <Text style={styles.SmallTextPurple}>Ainda não possui uma conta?</Text>
         <ButtonInlined title="CRIAR CONTA" onPress={() => navigation.navigate('Login')} />
       </View>
+      <Toast config={toastConfig} />
     </View>
   );
 }

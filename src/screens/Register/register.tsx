@@ -2,12 +2,14 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { View, Text, TextInput, Alert, ActivityIndicator } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 import { styles } from './register.style';
 
 import SvgLogo from '~/assets/Logo';
 import { Button } from '~/components/Button';
 import { ButtonInlined } from '~/components/ButtonInlined';
+import { toastConfig } from '~/components/Toast';
 import { auth, db } from '~/services/firebase';
 
 export default function Register({ navigation }: { navigation: any }) {
@@ -19,22 +21,38 @@ export default function Register({ navigation }: { navigation: any }) {
 
   function validateInputs() {
     if (name.length === 0 || email.length === 0) {
-      Alert.alert('Preencha todos os campos!');
+      Toast.show({
+        type: 'info',
+        text1: 'Dados Faltando!',
+        text2: 'Por favor, preencha todos os campos.',
+      });
       return false;
     }
 
     if (name.length <= 4) {
-      Alert.alert('Nome muito curto! O nome deve ter mais de 4 caracteres.');
+      Toast.show({
+        type: 'info',
+        text1: 'Nome Curto!',
+        text2: 'O nome deve ter mais de 4 caracteres.',
+      });
       return false;
     }
 
     if (password.length < 6) {
-      Alert.alert('A senha deve ter pelo menos 6 caracteres.');
+      Toast.show({
+        type: 'info',
+        text1: 'Senha Curta!',
+        text2: 'A senha deve ter pelo menos 6 caracteres.',
+      });
       return false;
     }
 
     if (confirmPassword !== password) {
-      Alert.alert('As senhas não batem!');
+      Toast.show({
+        type: 'info',
+        text1: 'Senhas não batem!',
+        text2: 'As senhas devem ser iguais.',
+      });
       return false;
     }
 
@@ -63,12 +81,20 @@ export default function Register({ navigation }: { navigation: any }) {
         setName('');
         setConfirmPassword('');
 
-        Alert.alert('Usuário cadastrado com sucesso!');
+        Toast.show({
+          type: 'success',
+          text1: 'Sucesso!',
+          text2: 'Você está cadastrado.',
+        });
         navigation.navigate('PrivateRoutes');
       })
       .catch((error) => {
         setLoading(false);
-        Alert.alert('Erro ao criar conta', error.message);
+        Toast.show({
+          type: 'error',
+          text1: 'Erro ao criar conta!',
+          text2: 'Erro:' + error,
+        });
       });
   }
 
@@ -119,6 +145,7 @@ export default function Register({ navigation }: { navigation: any }) {
         <Text style={styles.SmallTextPurple}>Já possui uma conta?</Text>
         <ButtonInlined title="ENTRAR NA CONTA" onPress={() => navigation.navigate('Register')} />
       </View>
+      <Toast config={toastConfig} />
     </View>
   );
 }
