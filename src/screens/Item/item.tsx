@@ -1,5 +1,6 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
+import * as Clipboard from 'expo-clipboard';
 import React, { useEffect, useState } from 'react';
 import {
   FlatList,
@@ -32,6 +33,7 @@ import {
   getItemForEdit,
 } from '~/services/functions';
 import { generateUnicId } from '~/utils/functions/generateUnicId';
+import { shareList } from '~/utils/functions/shareList';
 import { isValidItemName, isValidQuantity } from '~/utils/functions/validations';
 
 export default function Item({ route }: { route: any }) {
@@ -142,6 +144,7 @@ export default function Item({ route }: { route: any }) {
       }, 300);
       setItemRef('');
       setQuantity('');
+      setType('Un.');
       loadData();
     } catch (error) {
       console.log('Erro ao adicionar item:', error);
@@ -265,6 +268,19 @@ export default function Item({ route }: { route: any }) {
     : null;
 
   const listItems = targetList ? targetList.listItens : [];
+
+  const handleCopyList = () => {
+    const textToCopy = [
+      listName,
+      '',
+      ...listItems.map(
+        (item: { itemName: string; itemQuantity: string }) =>
+          `${item.itemName} - ${item.itemQuantity}`
+      ),
+    ].join('\n');
+
+    Clipboard.setString(textToCopy);
+  };
 
   const toggleItemType = () => {
     const currentIndex = itemTypes.indexOf(type);
@@ -403,7 +419,8 @@ export default function Item({ route }: { route: any }) {
         isListItems
         toggle={handleChangeActivity}
         items={listItensCount}
-        onGeneratePDF={() => {}}
+        onShareList={() => shareList(listName, listItems)}
+        onCopyList={handleCopyList}
       />
     </View>
   );

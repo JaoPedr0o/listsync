@@ -14,7 +14,8 @@ type FooterListProps = {
   onPress?: () => void;
   toggle?: () => void;
   onDelete?: () => void;
-  onGeneratePDF?: () => void;
+  onShareList?: () => void;
+  onCopyList?: () => void;
 };
 
 export default function FooterList(props: FooterListProps) {
@@ -43,10 +44,10 @@ export default function FooterList(props: FooterListProps) {
           <TouchableOpacity onPress={props.onDelete} style={styles.ActionDeleteButton}>
             <FontAwesome name="trash" size={20} color="#FFFFFF" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={props.onGeneratePDF} style={styles.ActionButton}>
-            <FontAwesome name="file-pdf-o" size={20} color="#FFFFFF" />
+          <TouchableOpacity onPress={props.onCopyList} style={styles.ActionButton}>
+            <FontAwesome name="copy" size={20} color="#FFFFFF" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.ActionButton}>
+          <TouchableOpacity onPress={props.onShareList} style={styles.ActionButton}>
             <FontAwesome name="share-alt" size={20} color="#FFFFFF" />
           </TouchableOpacity>
           <CustomSwitch isActive={isEnable} onToggle={handleToggle} />
