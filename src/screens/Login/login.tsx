@@ -1,4 +1,3 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 import { View, Text, TextInput, ActivityIndicator } from 'react-native';
 import Toast from 'react-native-toast-message';
@@ -9,7 +8,7 @@ import SvgLogo from '~/assets/Logo';
 import { Button } from '~/components/Button/Button';
 import { ButtonInlined } from '~/components/ButtonInlined/ButtonInlined';
 import { toastConfig } from '~/components/Toast/Toast';
-import { auth } from '~/services/firebase';
+import { logIn } from '~/services/login';
 
 export default function Login({ navigation }: { navigation: any }) {
   const [password, setPassword] = useState('');
@@ -30,28 +29,31 @@ export default function Login({ navigation }: { navigation: any }) {
     return true;
   }
 
-  function login() {
+  async function login() {
     if (!validateInputs()) return;
-
     setLoading(true);
+    try {
+      await logIn(email, password);
+    } catch (error) {
+      const errorMessage = error;
+      setTimeout(() => {
+        Toast.show({
+          type: 'error',
+          text1: 'Erro ao Logar!',
+          text2: 'Erro: ' + errorMessage,
+        });
+      }, 300);
+    } finally {
+      setLoading(false);
+    }
+  }
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        setLoading(false);
-        setEmail('');
-        setPassword('');
-      })
-      .catch((error) => {
-        setLoading(false);
-        const errorMessage = error.message;
-        setTimeout(() => {
-          Toast.show({
-            type: 'error',
-            text1: 'Erro ao Logar!',
-            text2: 'Erro:' + errorMessage,
-          });
-        }, 300);
-      });
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#000" />
+      </View>
+    );
   }
 
   return (

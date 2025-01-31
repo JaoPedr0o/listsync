@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
 
-import { styles } from './ButtonInlined';
+import { styles } from './ButtonInlined.style';
 
 type ButtonProps = {
   title?: string;

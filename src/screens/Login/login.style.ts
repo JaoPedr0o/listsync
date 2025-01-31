@@ -50,6 +50,13 @@ export const styles = StyleSheet.create({
     marginVertical: 25,
   },
 
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+  },
+
   FormInput: {
     width: '100%',
     marginBottom: 20,

@@ -1,17 +1,18 @@
 import 'react-native-gesture-handler';
-import * as NavigationBar from 'expo-navigation-bar';
 import React, { useEffect } from 'react';
 import { StatusBar } from 'react-native';
 
 import RootStack from './src/routes';
 
+import { checkUserLogin } from '~/services/loginPersistCheck';
+
 export default function App() {
   useEffect(() => {
-    NavigationBar.setBackgroundColorAsync('#FFFFFF');
+    checkUserLogin();
   }, []);
   return (
     <>
-      <StatusBar barStyle={'dark-content'} animated backgroundColor={'white'} />
+      <StatusBar barStyle="dark-content" animated backgroundColor="white" />
       <RootStack />
     </>
   );
