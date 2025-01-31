@@ -20,10 +20,10 @@ import Toast from 'react-native-toast-message';
 import { styles } from './home.style';
 
 import SvgEmptyList from '~/assets/EmptyList';
-import FooterList from '~/components/FooterList';
-import ListCard from '~/components/ListCard';
-import { toastConfig } from '~/components/Toast';
-import HeaderContentInfo from '~/components/headerContentInfo';
+import FooterList from '~/components/FooterList/FooterList';
+import HeaderContentInfo from '~/components/HeaderContentInfo/headerContentInfo';
+import ListCard from '~/components/ListCard/ListCard';
+import { toastConfig } from '~/components/Toast/Toast';
 import { auth, db } from '~/services/firebase';
 import { getUserData } from '~/services/functions';
 import { generateUnicId } from '~/utils/functions/generateUnicId';
@@ -44,19 +44,23 @@ export default function Home({ navigation }: { navigation: any }) {
         setUserData(data);
         setLoading(false);
       } catch (error) {
-        Toast.show({
-          type: 'error',
-          text1: 'Erro ao buscar listas!',
-          text2: 'Erro:' + error,
-        });
+        setTimeout(() => {
+          Toast.show({
+            type: 'error',
+            text1: 'Erro ao buscar listas!',
+            text2: 'Erro:' + error,
+          });
+        }, 300);
         setLoading(false);
       }
     } else {
-      Toast.show({
-        type: 'error',
-        text1: 'Usuário não authenticado!',
-        text2: 'Faça login ou crie uma conta.',
-      });
+      setTimeout(() => {
+        Toast.show({
+          type: 'error',
+          text1: 'Usuário não authenticado!',
+          text2: 'Faça login ou crie uma conta.',
+        });
+      }, 300);
       setLoading(false);
     }
   };
@@ -113,26 +117,32 @@ export default function Home({ navigation }: { navigation: any }) {
           setModalVisible(false);
           setListInputColor('#E0E4EA');
         } else {
-          Toast.show({
-            type: 'info',
-            text1: 'Nome Imcopatível!',
-            text2: 'Digite um nome para a lista entre 5 e 30 caracteres.',
-          });
+          setTimeout(() => {
+            Toast.show({
+              type: 'info',
+              text1: 'Nome Imcopatível!',
+              text2: 'Digite um nome para a lista entre 5 e 30 caracteres.',
+            });
+          }, 300);
         }
       } catch (error) {
-        Toast.show({
-          type: 'error',
-          text1: 'Erro ao criar lista!',
-          text2: 'Erro:' + error,
-        });
+        setTimeout(() => {
+          Toast.show({
+            type: 'error',
+            text1: 'Erro ao criar lista!',
+            text2: 'Erro:' + error,
+          });
+        }, 300);
         setLoading(false);
       }
     } else {
-      Toast.show({
-        type: 'error',
-        text1: 'Usuário não authenticado!',
-        text2: 'Faça login ou crie uma conta.',
-      });
+      setTimeout(() => {
+        Toast.show({
+          type: 'error',
+          text1: 'Usuário não authenticado!',
+          text2: 'Faça login ou crie uma conta.',
+        });
+      }, 300);
     }
   };
 

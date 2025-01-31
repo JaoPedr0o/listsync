@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { TouchableOpacity, Animated, StyleSheet } from 'react-native';
+import { TouchableOpacity, Animated } from 'react-native';
+
+import { styles } from './SwitchCustom.style';
 
 interface CustomSwitchProps {
   isActive?: boolean;
@@ -55,29 +57,5 @@ const CustomSwitch: React.FC<CustomSwitchProps> = ({ isActive = false, onToggle 
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: 100,
-    height: 60,
-    justifyContent: 'center',
-  },
-  switchBackground: {
-    width: 100,
-    height: 60,
-    borderRadius: 50,
-    padding: 2,
-    justifyContent: 'center',
-  },
-  circle: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: '#FFFFFF',
-    position: 'absolute',
-    marginLeft: 3,
-    marginRight: 3,
-  },
-});
 
 export default CustomSwitch;

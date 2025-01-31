@@ -6,7 +6,7 @@ import React from 'react';
 import { RootStackParamList } from '.';
 import Home from '../screens/Home/home';
 
-import Avatar from '~/components/Avatar';
+import Avatar from '~/components/Avatar/Avatar';
 
 type Props = StackScreenProps<RootStackParamList, 'DrawerNavigator'>;
 

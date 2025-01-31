@@ -1,6 +1,8 @@
 import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+
+import { styles } from './Avatar.style';
 
 import { logOut } from '~/services/logout';
 
@@ -11,15 +13,3 @@ export default function Avatar() {
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  Container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 30,
-    width: 30,
-    marginRight: 15,
-    backgroundColor: '#000000',
-    borderRadius: 10,
-  },
-});

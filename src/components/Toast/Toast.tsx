@@ -18,13 +18,13 @@ export const toastConfig = {
       }}
       contentContainerStyle={{ paddingHorizontal: 15 }}
       text1Style={{
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: '900',
         flexWrap: 'wrap',
         color: 'black',
       }}
       text2Style={{
-        fontSize: 14,
+        fontSize: 12,
         flexWrap: 'wrap',
         color: 'black',
       }}
@@ -44,13 +44,13 @@ export const toastConfig = {
       }}
       contentContainerStyle={{ paddingHorizontal: 15 }}
       text1Style={{
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: '900',
         flexWrap: 'wrap',
         color: 'black',
       }}
       text2Style={{
-        fontSize: 14,
+        fontSize: 12,
         flexWrap: 'wrap',
         color: 'black',
       }}
@@ -70,13 +70,13 @@ export const toastConfig = {
       }}
       contentContainerStyle={{ paddingHorizontal: 15 }}
       text1Style={{
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: '900',
         flexWrap: 'wrap',
         color: 'black',
       }}
       text2Style={{
-        fontSize: 14,
+        fontSize: 12,
         flexWrap: 'wrap',
         color: 'black',
       }}

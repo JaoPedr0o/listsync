@@ -19,9 +19,9 @@ import { List, ListItem } from './item.types';
 import ItemSkeleton from './itemSkeletom';
 
 import SvgEmptyItens from '~/assets/EmptyItens';
-import FooterList from '~/components/FooterList';
-import ItemCard from '~/components/ItemCard';
-import { toastConfig } from '~/components/Toast';
+import FooterList from '~/components/FooterList/FooterList';
+import ItemCard from '~/components/ItemCard/ItemCard';
+import { toastConfig } from '~/components/Toast/Toast';
 import {
   addItemToList,
   deleteItemFromList,
@@ -69,7 +69,6 @@ export default function Item({ route }: { route: any }) {
       const userData = await getUserData();
       const userLists: List[] = userData.lists;
       const listIndex = userLists.findIndex((list) => list.listId === listId);
-
       if (listIndex !== -1) {
         const openedList = userLists[listIndex];
         setListActivity(openedList.listActivity);
@@ -92,7 +91,6 @@ export default function Item({ route }: { route: any }) {
 
   const handleDeleteList = async () => {
     setLoading(true);
-
     try {
       await deleteListFromUser(listId);
       setTimeout(() => {
@@ -102,7 +100,6 @@ export default function Item({ route }: { route: any }) {
           text2: 'Lista Deletada.',
         });
       }, 300);
-
       navigation.goBack();
     } catch (error) {
       setTimeout(() => {
@@ -128,7 +125,6 @@ export default function Item({ route }: { route: any }) {
       }, 300);
       return;
     }
-
     try {
       const itemData = {
         itemName: itemRef,
@@ -136,7 +132,6 @@ export default function Item({ route }: { route: any }) {
         itemType: type,
         itemId: generateUnicId(),
       };
-
       await addItemToList(listId, itemData);
       setTimeout(() => {
         Toast.show({
@@ -145,7 +140,6 @@ export default function Item({ route }: { route: any }) {
           text2: 'Item Adicionado.',
         });
       }, 300);
-
       setItemRef('');
       setQuantity('');
       loadData();
@@ -174,17 +168,14 @@ export default function Item({ route }: { route: any }) {
       return;
     }
     setLoading(true);
-
     const updatedItemData: ListItem = {
       itemName: itemRefEdit,
       itemId,
       itemQuantity: quantityEdit,
       itemType: type,
     };
-
     try {
       await updateItemInList(listId, itemId, updatedItemData);
-
       setEditItemId('');
       setItemRefEdit('');
       setQuantityEdit('');
@@ -361,7 +352,7 @@ export default function Item({ route }: { route: any }) {
                     style={styles.CloseModalButton}
                     hitSlop={25}
                     onPress={() => closeModal()}>
-                    <FontAwesome name="close" size={18} color="#000000" />
+                    <FontAwesome name="close" size={16} color="#000000" />
                   </TouchableOpacity>
                 </View>
                 <View style={styles.AddItemContainer}>
@@ -412,6 +403,7 @@ export default function Item({ route }: { route: any }) {
         isListItems
         toggle={handleChangeActivity}
         items={listItensCount}
+        onGeneratePDF={() => {}}
       />
     </View>
   );

@@ -3,7 +3,7 @@ import React from 'react';
 
 import DrawerNavigator from './drawer-navigator';
 
-import Avatar from '~/components/Avatar';
+import Avatar from '~/components/Avatar/Avatar';
 import Item from '~/screens/Item/item';
 
 export type RootStackParamList = {

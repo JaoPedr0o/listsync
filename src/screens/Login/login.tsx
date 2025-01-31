@@ -6,9 +6,9 @@ import Toast from 'react-native-toast-message';
 import { styles } from './login.style';
 
 import SvgLogo from '~/assets/Logo';
-import { Button } from '~/components/Button';
-import { ButtonInlined } from '~/components/ButtonInlined';
-import { toastConfig } from '~/components/Toast';
+import { Button } from '~/components/Button/Button';
+import { ButtonInlined } from '~/components/ButtonInlined/ButtonInlined';
+import { toastConfig } from '~/components/Toast/Toast';
 import { auth } from '~/services/firebase';
 
 export default function Login({ navigation }: { navigation: any }) {
@@ -18,11 +18,13 @@ export default function Login({ navigation }: { navigation: any }) {
 
   function validateInputs() {
     if (email.length === 0 || password.length === 0) {
-      Toast.show({
-        type: 'info',
-        text1: 'Campos Obrigatórios!',
-        text2: 'Por favor, preencha os campos.',
-      });
+      setTimeout(() => {
+        Toast.show({
+          type: 'info',
+          text1: 'Campos Obrigatórios!',
+          text2: 'Por favor, preencha os campos.',
+        });
+      }, 300);
       return false;
     }
     return true;
@@ -42,11 +44,13 @@ export default function Login({ navigation }: { navigation: any }) {
       .catch((error) => {
         setLoading(false);
         const errorMessage = error.message;
-        Toast.show({
-          type: 'error',
-          text1: 'Erro ao Logar!',
-          text2: 'Erro:' + errorMessage,
-        });
+        setTimeout(() => {
+          Toast.show({
+            type: 'error',
+            text1: 'Erro ao Logar!',
+            text2: 'Erro:' + errorMessage,
+          });
+        }, 300);
       });
   }
 
