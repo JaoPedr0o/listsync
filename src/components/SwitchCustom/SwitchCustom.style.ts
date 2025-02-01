@@ -2,20 +2,20 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    width: 100,
-    height: 60,
+    width: 80,
+    height: 40,
     justifyContent: 'center',
   },
   switchBackground: {
-    width: 100,
-    height: 60,
+    width: 80,
+    height: 40,
     borderRadius: 50,
     padding: 2,
     justifyContent: 'center',
   },
   circle: {
-    width: 50,
-    height: 50,
+    width: 30,
+    height: 30,
     borderRadius: 25,
     backgroundColor: '#FFFFFF',
     position: 'absolute',

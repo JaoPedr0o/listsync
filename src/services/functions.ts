@@ -103,6 +103,34 @@ export const updateItemInList = async (listId: string, itemId: string, updatedIt
   await updateDoc(userRef, { lists: userLists });
 };
 
+// Função para atualizar itens selecionados para compra de uma lista
+export const updateSelectedItens = async (
+  listId: string,
+  updatedItemData: { [key: string]: boolean }
+) => {
+  const user = auth.currentUser;
+  if (!user) throw new Error('Usuário não autenticado');
+
+  const userRef = doc(db, 'users', user.uid);
+  const userSnap = await getDoc(userRef);
+  if (!userSnap.exists()) throw new Error('Usuário não encontrado');
+
+  const userData = userSnap.data();
+  const userLists = userData?.lists || [];
+
+  const listIndex = userLists.findIndex((list: any) => list.listId === listId);
+  if (listIndex === -1) throw new Error('Lista não encontrada');
+
+  const openedList = userLists[listIndex];
+
+  openedList.listSelectedItens = {
+    ...openedList.listSelectedItens,
+    ...updatedItemData,
+  };
+
+  await updateDoc(userRef, { lists: userLists });
+};
+
 // Função para deletar item da lista
 export const deleteItemFromList = async (listId: string, itemId: string) => {
   const user = auth.currentUser;

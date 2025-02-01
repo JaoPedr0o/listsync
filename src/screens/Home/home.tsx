@@ -96,8 +96,9 @@ export default function Home({ navigation }: { navigation: any }) {
             listName: listRef,
             listId: generateUnicId(),
             listItens: [],
-            listActivity: true,
+            listActivity: false,
             listColor: listInputColor,
+            listSelectedItens: {},
           };
 
           await updateDoc(userRef, {

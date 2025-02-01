@@ -29,6 +29,7 @@ export const styles = StyleSheet.create({
 
   WrapperText: {
     width: 70,
+    alignItems: 'center',
     justifyContent: 'center',
     gap: 1,
   },
@@ -36,13 +37,13 @@ export const styles = StyleSheet.create({
   ActiveText: {
     color: '#59BF69',
     fontWeight: '900',
-    fontSize: 16,
+    fontSize: 14,
   },
 
   InativeText: {
     color: '#878787',
     fontWeight: '900',
-    fontSize: 16,
+    fontSize: 14,
   },
 
   TextBold: {
@@ -52,7 +53,7 @@ export const styles = StyleSheet.create({
   },
 
   SmalltextBold: {
-    fontSize: 16,
+    fontSize: 12,
     color: 'black',
     fontWeight: 'bold',
   },
@@ -99,5 +100,10 @@ export const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
+  },
+
+  WrapperButtons: {
+    flexDirection: 'row',
+    gap: 5,
   },
 });

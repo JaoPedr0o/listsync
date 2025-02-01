@@ -9,6 +9,7 @@ import CustomSwitch from '../SwitchCustom/SwitchCustom';
 
 type FooterListProps = {
   items?: number;
+  selectedItens?: number;
   enable: boolean;
   isListItems: boolean;
   onPress?: () => void;
@@ -35,21 +36,29 @@ export default function FooterList(props: FooterListProps) {
         <View style={styles.WrapperFooterItemList}>
           <View style={styles.WrapperText}>
             {isEnable ? (
-              <Text style={styles.ActiveText}>COMPRA</Text>
+              <>
+                <Text style={styles.ActiveText}>COMPRA</Text>
+                <Text style={styles.SmalltextBold}>{props.selectedItens ? props.selectedItens : 0}/{props.items ? props.items : '0'} ITENS</Text>
+              </>
             ) : (
-              <Text style={styles.InativeText}>EDIÇÃO</Text>
+              <>
+                <Text style={styles.InativeText}>EDIÇÃO</Text>
+                <Text style={styles.SmalltextBold}>{props.items ? props.items : '0'} itens</Text>
+              </>
             )}
-            <Text style={styles.SmalltextBold}>{props.items ? props.items : '0'} itens</Text>
+            
           </View>
-          <TouchableOpacity onPress={props.onDelete} style={styles.ActionDeleteButton}>
-            <FontAwesome name="trash" size={20} color="#FFFFFF" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={props.onCopyList} style={styles.ActionButton}>
-            <FontAwesome name="copy" size={20} color="#FFFFFF" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={props.onShareList} style={styles.ActionButton}>
-            <FontAwesome name="share-alt" size={20} color="#FFFFFF" />
-          </TouchableOpacity>
+          <View style={styles.WrapperButtons}>
+            <TouchableOpacity onPress={props.onDelete} style={styles.ActionDeleteButton}>
+              <FontAwesome name="trash" size={20} color="#FFFFFF" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={props.onCopyList} style={styles.ActionButton}>
+              <FontAwesome name="copy" size={20} color="#FFFFFF" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={props.onShareList} style={styles.ActionButton}>
+              <FontAwesome name="share-alt" size={20} color="#FFFFFF" />
+            </TouchableOpacity>
+          </View>
           <CustomSwitch isActive={isEnable} onToggle={handleToggle} />
         </View>
       ) : (

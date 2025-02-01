@@ -27,9 +27,9 @@ const CustomCheckbox = ({ label, value, onChange }: CustomCheckboxProps) => {
   return (
     <TouchableOpacity style={styles.checkboxContainer} onPress={() => onChange(!value)}>
       <Animated.View style={[styles.checkbox, { backgroundColor: animatedBackgroundColor }]}>
-        {value && <Ionicons name="checkmark" size={20} color="#FFFFFF" />}
+        <Ionicons name="checkmark" size={20} color={value ? '#FFFFFF' : '#E0E4EA'} />
       </Animated.View>
-      <Text style={styles.label}>{label}</Text>
+      {label && <Text style={styles.label}>{label}</Text>}
     </TouchableOpacity>
   );
 };

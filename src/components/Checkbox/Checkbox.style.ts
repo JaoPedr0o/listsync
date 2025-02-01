@@ -4,14 +4,13 @@ export const styles = StyleSheet.create({
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
   },
   checkbox: {
-    width: 24,
-    height: 24,
+    width: 40,
+    height: 40,
     borderWidth: 2,
-    borderColor: '#59BF69',
-    borderRadius: 5,
+    borderColor: '#E0E4EA',
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },

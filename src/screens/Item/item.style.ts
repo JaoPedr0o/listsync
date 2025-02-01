@@ -130,8 +130,7 @@ export const styles = StyleSheet.create({
   TypeIndicator: {
     zIndex: 3,
     fontWeight: '900',
-    fontSize: 12,
-    padding: 2,
+    fontSize: 10,
     color: '#FFFFFF',
     margin: 2,
     borderRadius: 5,

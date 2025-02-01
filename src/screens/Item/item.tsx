@@ -31,6 +31,7 @@ import {
   updateItemInList,
   toggleListActivity,
   getItemForEdit,
+  updateSelectedItens,
 } from '~/services/functions';
 import { generateUnicId } from '~/utils/functions/generateUnicId';
 import { shareList } from '~/utils/functions/shareList';
@@ -54,6 +55,7 @@ export default function Item({ route }: { route: any }) {
   const [itemRefEdit, setItemRefEdit] = useState('');
   const [editItemId, setEditItemId] = useState('');
   const [editModalVisible, setEditModalVisible] = useState(false);
+  const [selectedItems, setSelectedItems] = useState<{ [key: string]: boolean }>({});
 
   // Estado geral
   const [loading, setLoading] = useState(true);
@@ -76,6 +78,7 @@ export default function Item({ route }: { route: any }) {
         setListActivity(openedList.listActivity);
         setListItensCount(openedList.listItens.length);
         setListName(openedList.listName);
+        setSelectedItems(openedList.listSelectedItens);
       }
       setUserData(userData);
       setLoading(false);
@@ -296,6 +299,21 @@ export default function Item({ route }: { route: any }) {
     setType('Un.');
   };
 
+  const handleToggleSelection = async (id: string) => {
+    setSelectedItems((prev) => {
+      const newSelectedItems = {
+        ...prev,
+        [id]: !prev[id],
+      };
+
+      updateSelectedItens(listId, newSelectedItems);
+
+      return newSelectedItems;
+    });
+  };
+
+  const selectedCount = Object.values(selectedItems).filter(Boolean).length;
+
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -328,7 +346,7 @@ export default function Item({ route }: { route: any }) {
             />
             <TouchableOpacity style={styles.ListTypeButton} onPress={toggleItemType}>
               {editModalVisible === false && <Text style={styles.TypeIndicator}>{type}</Text>}
-              <FontAwesome name="gears" size={20} color="#FFFFFF" />
+              <FontAwesome name="gears" size={12} color="#FFFFFF" />
             </TouchableOpacity>
           </View>
           <TouchableOpacity style={styles.ListAddButton} onPress={handleAddItem}>
@@ -345,6 +363,9 @@ export default function Item({ route }: { route: any }) {
                 onEdit={() => handleOpenModalEdit(item.itemId)}
                 Type={item.itemType}
                 Description={item.itemName}
+                Mode={!listActivity}
+                isSelected={!!selectedItems[item.itemId]}
+                onToggle={() => handleToggleSelection(item.itemId)}
               />
             )}
             keyExtractor={(item) => item.itemId}
@@ -391,7 +412,7 @@ export default function Item({ route }: { route: any }) {
                     />
                     <TouchableOpacity style={styles.ListTypeButton} onPress={toggleItemType}>
                       <Text style={styles.TypeIndicator}>{type}</Text>
-                      <FontAwesome name="plus-circle" size={20} color="#FFFFFF" />
+                      <FontAwesome name="gears" size={12} color="#FFFFFF" />
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -419,6 +440,7 @@ export default function Item({ route }: { route: any }) {
         isListItems
         toggle={handleChangeActivity}
         items={listItensCount}
+        selectedItens={selectedCount}
         onShareList={() => shareList(listName, listItems)}
         onCopyList={handleCopyList}
       />

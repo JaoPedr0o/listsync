@@ -11,4 +11,5 @@ export interface List {
   listName: string;
   listActivity: boolean;
   listColor: string;
+  listSelectedItens: { [key: string]: boolean };
 }

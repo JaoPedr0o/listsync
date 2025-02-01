@@ -39,6 +39,7 @@ export const styles = StyleSheet.create({
   EditItemWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
   },
 
   QuantityWrapper: {
