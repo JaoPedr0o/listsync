@@ -12,34 +12,34 @@ export const styles = StyleSheet.create({
 
   LargeTextBlack: {
     fontSize: 18,
-    fontWeight: '900',
+    fontFamily: 'Righteous_400Regular',
     color: '#000',
   },
 
   SmallTextBlack: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontFamily: 'Righteous_400Regular',
     color: '#000',
     textAlign: 'justify',
   },
 
   CenteredSmallTextBlack: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontFamily: 'Righteous_400Regular',
     color: '#000',
     textAlign: 'center',
   },
 
   SmallTextGreen: {
     fontSize: 14,
-    fontWeight: '900',
+    fontFamily: 'Righteous_400Regular',
     color: '#59BF69',
     textAlign: 'justify',
   },
 
   SmallTextPurple: {
     fontSize: 14,
-    fontWeight: '900',
+    fontFamily: 'Righteous_400Regular',
     color: '#6C59BF',
     textAlign: 'center',
   },
@@ -68,7 +68,7 @@ export const styles = StyleSheet.create({
     borderBottomColor: '#000',
     width: '100%',
     fontSize: 14,
-    fontWeight: 'bold',
+    fontFamily: 'Righteous_400Regular',
   },
 
   ActiveIndicator: {

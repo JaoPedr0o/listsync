@@ -43,19 +43,19 @@ export const styles = StyleSheet.create({
   TextBold: {
     fontSize: 20,
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: 'Righteous_400Regular',
   },
 
   SmallWhiteTextBold: {
     fontSize: 14,
     color: 'white',
-    fontWeight: 'bold',
+    fontFamily: 'Righteous_400Regular',
   },
 
   GrayTextBold: {
     fontSize: 14,
     color: '#000',
-    fontWeight: 'bold',
+    fontFamily: 'Righteous_400Regular',
   },
 
   MainInput: {
@@ -68,14 +68,14 @@ export const styles = StyleSheet.create({
     paddingRight: 10,
     maxWidth: 160,
     minWidth: 160,
-    fontWeight: 'bold',
+    fontFamily: 'Righteous_400Regular',
     flex: 1,
   },
 
   ListNameTitle: {
     fontSize: 16,
-    fontWeight: '900',
     color: '#FFFFFF',
+    fontFamily: 'Righteous_400Regular',
     borderRadius: 10,
     textAlign: 'center',
     backgroundColor: '#000000',
@@ -98,7 +98,7 @@ export const styles = StyleSheet.create({
     color: '#000',
     fontSize: 12,
     width: 75,
-    fontWeight: 'bold',
+    fontFamily: 'Righteous_400Regular',
     flex: 1,
   },
 
@@ -129,7 +129,7 @@ export const styles = StyleSheet.create({
 
   TypeIndicator: {
     zIndex: 3,
-    fontWeight: '900',
+    fontFamily: 'Righteous_400Regular',
     fontSize: 10,
     color: '#FFFFFF',
     margin: 2,

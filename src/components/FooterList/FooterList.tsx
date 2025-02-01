@@ -43,7 +43,7 @@ export default function FooterList(props: FooterListProps) {
             ) : (
               <>
                 <Text style={styles.InativeText}>EDIÇÃO</Text>
-                <Text style={styles.SmalltextBold}>{props.items ? props.items : '0'} itens</Text>
+                <Text style={styles.SmalltextBold}>{props.items ? props.items : '0'} ITENS</Text>
               </>
             )}
             

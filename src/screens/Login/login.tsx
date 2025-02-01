@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, ActivityIndicator } from 'react-native';
 import Toast from 'react-native-toast-message';
 
@@ -14,6 +15,17 @@ export default function Login({ navigation }: { navigation: any }) {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
+
+  async function autoFillData() {
+    const userData = await AsyncStorage.getItem('@user_data');
+
+    if (userData) {
+      const { email, password } = JSON.parse(userData);
+
+      setEmail(email);
+      setPassword(password);
+    }
+  }
 
   function validateInputs() {
     if (email.length === 0 || password.length === 0) {
@@ -47,6 +59,10 @@ export default function Login({ navigation }: { navigation: any }) {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    autoFillData();
+  }, []);
 
   if (loading) {
     return (

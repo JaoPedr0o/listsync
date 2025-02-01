@@ -6,6 +6,7 @@ import React from 'react';
 import { RootStackParamList } from '.';
 import Home from '../screens/Home/home';
 
+import SvgLogoSmall from '~/assets/LogoSmall';
 import Avatar from '~/components/Avatar/Avatar';
 
 type Props = StackScreenProps<RootStackParamList, 'DrawerNavigator'>;
@@ -16,7 +17,7 @@ export default function DrawerNavigator({ navigation }: Props) {
   return (
     <Drawer.Navigator>
       <Drawer.Screen
-        name="LISTSYNC"
+        name=" "
         component={Home}
         options={{
           drawerActiveTintColor: 'white',
@@ -40,11 +41,12 @@ export default function DrawerNavigator({ navigation }: Props) {
           headerRight: () => <Avatar />,
           headerTitleAlign: 'center',
           headerTitleStyle: {
-            fontWeight: '900',
+            fontFamily: 'Righteous_400Regular',
             fontSize: 20,
           },
           drawerIcon: ({ size, color }) => <Ionicons name="home" size={size} color={color} />,
           headerStyle: { shadowColor: '#FFFFFF' },
+          headerLeft: () => <SvgLogoSmall />,
         }}
       />
     </Drawer.Navigator>

@@ -8,18 +8,18 @@ export const styles = StyleSheet.create({
   TextBold: {
     fontSize: 20,
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: 'Righteous_400Regular',
   },
 
   TitleTextBold: {
     fontSize: 20,
     color: 'black',
-    fontWeight: '900',
+    fontFamily: 'Righteous_400Regular',
   },
 
   GrayTextBold: {
     fontSize: 14,
     color: '#878787',
-    fontWeight: 'bold',
+    fontFamily: 'Righteous_400Regular',
   },
 });

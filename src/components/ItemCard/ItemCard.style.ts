@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
   TextBold: {
     fontSize: 16,
     color: '#000000',
-    fontWeight: 'bold',
+    fontFamily: 'Righteous_400Regular',
     flex: 1,
   },
 
@@ -55,13 +55,13 @@ export const styles = StyleSheet.create({
 
   QuantityText: {
     fontSize: 12,
-    fontWeight: '900',
+    fontFamily: 'Righteous_400Regular',
     color: '#000',
   },
 
   TypeText: {
     fontSize: 12,
-    fontWeight: '800',
+    fontFamily: 'Righteous_400Regular',
     color: '#000',
   },
 });

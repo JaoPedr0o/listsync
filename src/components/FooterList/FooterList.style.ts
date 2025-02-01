@@ -12,7 +12,6 @@ export const styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     backgroundColor: '#FFFFFF',
     borderTopRightRadius: 10,
-    borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -36,32 +35,32 @@ export const styles = StyleSheet.create({
 
   ActiveText: {
     color: '#59BF69',
-    fontWeight: '900',
     fontSize: 14,
+    fontFamily: 'Righteous_400Regular',
   },
 
   InativeText: {
     color: '#878787',
-    fontWeight: '900',
+    fontFamily: 'Righteous_400Regular',
     fontSize: 14,
   },
 
   TextBold: {
     fontSize: 20,
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: 'Righteous_400Regular',
   },
 
   SmalltextBold: {
     fontSize: 12,
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: 'Righteous_400Regular',
   },
 
   GrayTextBold: {
     fontSize: 14,
     color: '#878787',
-    fontWeight: 'bold',
+    fontFamily: 'Righteous_400Regular',
   },
 
   ActionButton: {

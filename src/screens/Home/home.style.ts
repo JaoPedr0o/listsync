@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
     borderLeftWidth: 8,
     paddingLeft: 16,
     paddingRight: 24,
-    fontWeight: '500',
+    fontFamily: 'Righteous_400Regular',
     fontSize: 16,
     color: '#343A40',
     textAlignVertical: 'center',

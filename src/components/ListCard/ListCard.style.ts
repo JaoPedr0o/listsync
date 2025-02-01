@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
   TextBold: {
     fontSize: 16,
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: 'Righteous_400Regular',
     flex: 1,
   },
 });

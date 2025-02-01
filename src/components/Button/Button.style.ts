@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
   buttonText: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontWeight: '900',
+    fontFamily: 'Righteous_400Regular',
     textAlign: 'center',
   },
 });
