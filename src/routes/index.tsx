@@ -8,7 +8,7 @@ import PublicRoutes from './publicRoutes';
 import { auth } from '~/services/firebase';
 
 export type RootStackParamList = {
-  DrawerNavigator: undefined;
+  LISTSYNC: undefined;
   PrivateRoutes: undefined;
   PublicRoutes: undefined;
 };

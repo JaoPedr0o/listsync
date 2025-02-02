@@ -4,12 +4,14 @@ import { TouchableOpacity } from 'react-native';
 
 import { styles } from './Avatar.style';
 
-import { logOut } from '~/services/logout';
+type AvatarProps = {
+  onPress?: () => void;
+};
 
-export default function Avatar() {
+export default function Avatar(props: AvatarProps) {
   return (
-    <TouchableOpacity style={styles.Container} onPress={() => logOut()}>
-      <FontAwesome name="user" size={14} color="#FFFFFF" />
+    <TouchableOpacity style={styles.Container} onPress={props.onPress}>
+      <FontAwesome name="bars" size={14} color="#FFFFFF" />
     </TouchableOpacity>
   );
 }
