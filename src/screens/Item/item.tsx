@@ -83,13 +83,12 @@ export default function Item({ route }: { route: any }) {
       setUserData(userData);
       setLoading(false);
     } catch (error) {
-      setTimeout(() => {
-        Toast.show({
-          type: 'error',
-          text1: 'Erro ao carregar dados!',
-          text2: 'Erro:' + error,
-        });
-      }, 300);
+      Toast.show({
+        type: 'error',
+        text1: 'Erro ao carregar dados!',
+        text2: 'Erro:' + error,
+        visibilityTime: 1000,
+      });
       setLoading(false);
     }
   };
@@ -98,22 +97,20 @@ export default function Item({ route }: { route: any }) {
     setLoading(true);
     try {
       await deleteListFromUser(listId);
-      setTimeout(() => {
-        Toast.show({
-          type: 'success',
-          text1: 'Sucesso!',
-          text2: 'Lista Deletada.',
-        });
-      }, 300);
+      Toast.show({
+        type: 'success',
+        text1: 'Sucesso!',
+        text2: 'Lista Deletada.',
+        visibilityTime: 1000,
+      });
       navigation.goBack();
     } catch (error) {
-      setTimeout(() => {
-        Toast.show({
-          type: 'error',
-          text1: 'Erro ao deletar lista!',
-          text2: 'Erro:' + error,
-        });
-      }, 300);
+      Toast.show({
+        type: 'error',
+        text1: 'Erro ao deletar lista!',
+        text2: 'Erro:' + error,
+        visibilityTime: 1000,
+      });
     } finally {
       setLoading(false);
     }
@@ -121,13 +118,12 @@ export default function Item({ route }: { route: any }) {
 
   const handleAddItem = async () => {
     if (!isValidItemName(itemRef) || !isValidQuantity(quantity)) {
-      setTimeout(() => {
-        Toast.show({
-          type: 'error',
-          text1: 'Nome ou quantidade inválidos!',
-          text2: 'Nome: 3 a 20 caracteres. Informe a quantidade.',
-        });
-      }, 300);
+      Toast.show({
+        type: 'error',
+        text1: 'Nome ou quantidade inválidos!',
+        text2: 'Nome: 3 a 20 caracteres. Informe a quantidade.',
+        visibilityTime: 1000,
+      });
       return;
     }
     try {
@@ -138,39 +134,36 @@ export default function Item({ route }: { route: any }) {
         itemId: generateUnicId(),
       };
       await addItemToList(listId, itemData);
-      setTimeout(() => {
-        Toast.show({
-          type: 'success',
-          text1: 'Sucesso!',
-          text2: 'Item Adicionado.',
-        });
-      }, 300);
+      Toast.show({
+        type: 'success',
+        text1: 'Sucesso!',
+        text2: 'Item Adicionado.',
+        visibilityTime: 1000,
+      });
       setItemRef('');
       setQuantity('');
       setType('Un.');
       loadData();
     } catch (error) {
       console.log('Erro ao adicionar item:', error);
-      setTimeout(() => {
-        Toast.show({
-          type: 'error',
-          text1: 'Erro ao adicionar item!',
-          text2: 'Ocorreu um problema. Tente novamente.',
-        });
-      }, 300);
+      Toast.show({
+        type: 'error',
+        text1: 'Erro ao adicionar item!',
+        text2: 'Ocorreu um problema. Tente novamente.',
+        visibilityTime: 1000,
+      });
     }
   };
 
   const handleUpdateItem = async (listId: string, itemId: string) => {
     if (!isValidItemName(itemRefEdit) || !isValidQuantity(quantityEdit)) {
       closeModal();
-      setTimeout(() => {
-        Toast.show({
-          type: 'error',
-          text1: 'Nome ou quantidade inválidos!',
-          text2: 'Nome: 3 a 20 caracteres. Informe a quantidade.',
-        });
-      }, 300);
+      Toast.show({
+        type: 'error',
+        text1: 'Nome ou quantidade inválidos!',
+        text2: 'Nome: 3 a 20 caracteres. Informe a quantidade.',
+        visibilityTime: 1000,
+      });
       return;
     }
     setLoading(true);
@@ -187,21 +180,19 @@ export default function Item({ route }: { route: any }) {
       setQuantityEdit('');
       loadData();
       closeModal();
-      setTimeout(() => {
-        Toast.show({
-          type: 'success',
-          text1: 'Sucesso!',
-          text2: 'Item Atualizado.',
-        });
-      }, 300);
+      Toast.show({
+        type: 'success',
+        text1: 'Sucesso!',
+        text2: 'Item Atualizado.',
+        visibilityTime: 1000,
+      });
     } catch (error) {
-      setTimeout(() => {
-        Toast.show({
-          type: 'error',
-          text1: 'Erro ao atualizar item!',
-          text2: 'Erro:' + error,
-        });
-      }, 300);
+      Toast.show({
+        type: 'error',
+        text1: 'Erro ao atualizar item!',
+        text2: 'Erro:' + error,
+        visibilityTime: 1000,
+      });
     } finally {
       setLoading(false);
     }
@@ -214,21 +205,19 @@ export default function Item({ route }: { route: any }) {
       setQuantity('');
       closeModal();
       loadData();
-      setTimeout(() => {
-        Toast.show({
-          type: 'success',
-          text1: 'Sucesso!',
-          text2: 'Item Deletado.',
-        });
-      }, 300);
+      Toast.show({
+        type: 'success',
+        text1: 'Sucesso!',
+        text2: 'Item Deletado.',
+        visibilityTime: 1000,
+      });
     } catch (error) {
-      setTimeout(() => {
-        Toast.show({
-          type: 'error',
-          text1: 'Erro ao deletar item!',
-          text2: 'Erro:' + error,
-        });
-      }, 300);
+      Toast.show({
+        type: 'error',
+        text1: 'Erro ao deletar item!',
+        text2: 'Erro:' + error,
+        visibilityTime: 1000,
+      });
     }
   };
 
@@ -237,13 +226,12 @@ export default function Item({ route }: { route: any }) {
       const updatedActivity = await toggleListActivity(listId);
       setListActivity(updatedActivity);
     } catch (error) {
-      setTimeout(() => {
-        Toast.show({
-          type: 'error',
-          text1: 'Erro ao alterar modo!',
-          text2: 'Erro:' + error,
-        });
-      }, 300);
+      Toast.show({
+        type: 'error',
+        text1: 'Erro ao alterar modo!',
+        text2: 'Erro:' + error,
+        visibilityTime: 1000,
+      });
     }
   };
 
@@ -256,13 +244,12 @@ export default function Item({ route }: { route: any }) {
       setEditItemId(item.itemId);
       setEditModalVisible(true);
     } catch (error) {
-      setTimeout(() => {
-        Toast.show({
-          type: 'error',
-          text1: 'Erro!',
-          text2: 'Erro:' + error,
-        });
-      }, 300);
+      Toast.show({
+        type: 'error',
+        text1: 'Erro!',
+        text2: 'Erro:' + error,
+        visibilityTime: 1000,
+      });
     }
   };
 

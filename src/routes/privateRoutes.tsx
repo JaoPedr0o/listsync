@@ -36,25 +36,24 @@ export default function PrivateRoutes() {
       <Stack.Screen
         name="Item"
         component={Item}
-        options={({ navigation }: { navigation: StackNavigationProp<RootStackParamList> }) => ({
+        options={{
           headerShown: true,
           title: 'LISTSYNC',
           headerTitleAlign: 'center',
           headerStyle: { shadowColor: '#FFFFFF' },
           headerTitleStyle: { fontSize: 20, fontFamily: 'Righteous_400Regular' },
-          headerRight: () => <Avatar onPress={() => navigation.navigate('Menu')} />,
-        })}
+        }}
       />
       <Stack.Screen
         name="Menu"
         component={Menu}
-        options={({ navigation }: { navigation: StackNavigationProp<RootStackParamList> }) => ({
+        options={{
           headerShown: true,
           title: 'MENU DE AÇÕES',
           headerTitleAlign: 'center',
           headerStyle: { shadowColor: '#FFFFFF' },
           headerTitleStyle: { fontSize: 20, fontFamily: 'Righteous_400Regular' },
-        })}
+        }}
       />
     </Stack.Navigator>
   );

@@ -32,7 +32,7 @@ const Menu = () => {
       <View style={styles.Container}>
         <TouchableOpacity style={styles.menuItem} onPress={handleEditProfile}>
           <FontAwesome name="user" size={14} color="#000000" />
-          <Text style={styles.textBold}>Editar Perfil</Text>
+          <Text style={styles.textBold}>Editar Dados</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.menuItem} onPress={handleDeleteAccount}>

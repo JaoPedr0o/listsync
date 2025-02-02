@@ -44,23 +44,23 @@ export default function Home({ navigation }: { navigation: any }) {
         setUserData(data);
         setLoading(false);
       } catch (error) {
-        setTimeout(() => {
-          Toast.show({
-            type: 'error',
-            text1: 'Erro ao buscar listas!',
-            text2: 'Erro:' + error,
-          });
-        }, 300);
+        Toast.show({
+          type: 'error',
+          text1: 'Erro ao buscar listas!',
+          text2: 'Erro:' + error,
+          visibilityTime: 1000,
+        });
+
         setLoading(false);
       }
     } else {
-      setTimeout(() => {
-        Toast.show({
-          type: 'error',
-          text1: 'Usuário não authenticado!',
-          text2: 'Faça login ou crie uma conta.',
-        });
-      }, 300);
+      Toast.show({
+        type: 'error',
+        text1: 'Usuário não authenticado!',
+        text2: 'Faça login ou crie uma conta.',
+        visibilityTime: 1000,
+      });
+
       setLoading(false);
     }
   };
@@ -104,13 +104,13 @@ export default function Home({ navigation }: { navigation: any }) {
           await updateDoc(userRef, {
             lists: arrayUnion(listData),
           });
-          setTimeout(() => {
-            Toast.show({
-              type: 'success',
-              text1: 'Sucesso!',
-              text2: 'Nova lista criada.',
-            });
-          }, 300);
+          Toast.show({
+            type: 'success',
+            text1: 'Sucesso!',
+            text2: 'Nova lista criada.',
+            visibilityTime: 1000,
+          });
+
           navigation.navigate('Item', { listId: listData.listId });
           loadData();
           setLoading(false);
@@ -118,32 +118,30 @@ export default function Home({ navigation }: { navigation: any }) {
           setModalVisible(false);
           setListInputColor('#E0E4EA');
         } else {
-          setTimeout(() => {
-            Toast.show({
-              type: 'info',
-              text1: 'Nome Imcopatível!',
-              text2: 'Digite um nome para a lista entre 5 e 30 caracteres.',
-            });
-          }, 300);
+          Toast.show({
+            type: 'info',
+            text1: 'Nome Imcopatível!',
+            text2: 'Digite um nome para a lista entre 5 e 30 caracteres.',
+            visibilityTime: 1000,
+          });
         }
       } catch (error) {
-        setTimeout(() => {
-          Toast.show({
-            type: 'error',
-            text1: 'Erro ao criar lista!',
-            text2: 'Erro:' + error,
-          });
-        }, 300);
+        Toast.show({
+          type: 'error',
+          text1: 'Erro ao criar lista!',
+          text2: 'Erro:' + error,
+          visibilityTime: 1000,
+        });
+
         setLoading(false);
       }
     } else {
-      setTimeout(() => {
-        Toast.show({
-          type: 'error',
-          text1: 'Usuário não authenticado!',
-          text2: 'Faça login ou crie uma conta.',
-        });
-      }, 300);
+      Toast.show({
+        type: 'error',
+        text1: 'Usuário não authenticado!',
+        text2: 'Faça login ou crie uma conta.',
+        visibilityTime: 1000,
+      });
     }
   };
 

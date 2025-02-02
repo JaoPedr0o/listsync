@@ -21,46 +21,42 @@ export default function Register({ navigation }: { navigation: any }) {
 
   function validateInputs() {
     if (name.length === 0 || email.length === 0) {
-      setTimeout(() => {
-        Toast.show({
-          type: 'info',
-          text1: 'Dados Faltando!',
-          text2: 'Por favor, preencha todos os campos.',
-        });
-      }, 300);
+      Toast.show({
+        type: 'info',
+        text1: 'Dados Faltando!',
+        text2: 'Por favor, preencha todos os campos.',
+        visibilityTime: 1000,
+      });
       return false;
     }
 
     if (name.length <= 4) {
-      setTimeout(() => {
-        Toast.show({
-          type: 'info',
-          text1: 'Nome Curto!',
-          text2: 'O nome deve ter mais de 4 caracteres.',
-        });
-      }, 300);
+      Toast.show({
+        type: 'info',
+        text1: 'Nome Curto!',
+        text2: 'O nome deve ter mais de 4 caracteres.',
+        visibilityTime: 1000,
+      });
       return false;
     }
 
     if (password.length < 6) {
-      setTimeout(() => {
-        Toast.show({
-          type: 'info',
-          text1: 'Senha Curta!',
-          text2: 'A senha deve ter pelo menos 6 caracteres.',
-        });
-      }, 300);
+      Toast.show({
+        type: 'info',
+        text1: 'Senha Curta!',
+        text2: 'A senha deve ter pelo menos 6 caracteres.',
+        visibilityTime: 1000,
+      });
       return false;
     }
 
     if (confirmPassword !== password) {
-      setTimeout(() => {
-        Toast.show({
-          type: 'info',
-          text1: 'Senhas não batem!',
-          text2: 'As senhas devem ser iguais.',
-        });
-      }, 300);
+      Toast.show({
+        type: 'info',
+        text1: 'Senhas não batem!',
+        text2: 'As senhas devem ser iguais.',
+        visibilityTime: 1000,
+      });
       return false;
     }
 
@@ -89,24 +85,24 @@ export default function Register({ navigation }: { navigation: any }) {
         setName('');
         setConfirmPassword('');
 
-        setTimeout(() => {
-          Toast.show({
-            type: 'success',
-            text1: 'Sucesso!',
-            text2: 'Você está cadastrado.',
-          });
-        }, 300);
+        Toast.show({
+          type: 'success',
+          text1: 'Sucesso!',
+          text2: 'Você está cadastrado.',
+          visibilityTime: 1000,
+        });
+
         navigation.navigate('PrivateRoutes');
       })
       .catch((error) => {
         setLoading(false);
-        setTimeout(() => {
-          Toast.show({
-            type: 'error',
-            text1: 'Erro ao criar conta!',
-            text2: 'Erro:' + error,
-          });
-        }, 300);
+
+        Toast.show({
+          type: 'error',
+          text1: 'Erro ao criar conta!',
+          text2: 'Erro:' + error,
+          visibilityTime: 1000,
+        });
       });
   }
 

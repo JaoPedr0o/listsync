@@ -29,13 +29,12 @@ export default function Login({ navigation }: { navigation: any }) {
 
   function validateInputs() {
     if (email.length === 0 || password.length === 0) {
-      setTimeout(() => {
-        Toast.show({
-          type: 'info',
-          text1: 'Campos Obrigatórios!',
-          text2: 'Por favor, preencha os campos.',
-        });
-      }, 300);
+      Toast.show({
+        type: 'info',
+        text1: 'Campos Obrigatórios!',
+        visibilityTime: 1000,
+        text2: 'Por favor, preencha os campos.',
+      });
       return false;
     }
     return true;
@@ -48,13 +47,13 @@ export default function Login({ navigation }: { navigation: any }) {
       await logIn(email, password);
     } catch (error) {
       const errorMessage = error;
-      setTimeout(() => {
-        Toast.show({
-          type: 'error',
-          text1: 'Erro ao Logar!',
-          text2: 'Erro: ' + errorMessage,
-        });
-      }, 300);
+
+      Toast.show({
+        type: 'error',
+        text1: 'Erro ao Logar!',
+        visibilityTime: 1000,
+        text2: 'Erro: ' + errorMessage,
+      });
     } finally {
       setLoading(false);
     }
@@ -99,9 +98,13 @@ export default function Login({ navigation }: { navigation: any }) {
           placeholder="Senha:"
           secureTextEntry
         />
-        <Text style={styles.CenteredSmallTextBlack}>Esqueci minha Senha</Text>
+        <Text
+          onPress={() => navigation.navigate('PasswordRecoveryScreen')}
+          style={styles.SmallTextPurple}>
+          Esqueci minha Senha
+        </Text>
         <Button title="ENTRAR" onPress={login} />
-        <Text style={styles.SmallTextPurple}>Ainda não possui uma conta?</Text>
+        <Text style={styles.CenteredSmallTextBlack}>Ainda não possui uma conta?</Text>
         <ButtonInlined title="CRIAR CONTA" onPress={() => navigation.navigate('Login')} />
       </View>
       <Toast config={toastConfig} />
