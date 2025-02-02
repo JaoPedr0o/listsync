@@ -6,6 +6,7 @@ import PrivateRoutes from './privateRoutes';
 import PublicRoutes from './publicRoutes';
 
 import { auth } from '~/services/firebase';
+import { useTheme } from '~/theme/themeContext';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -16,6 +17,7 @@ export type RootStackParamList = {
 const Stack = createStackNavigator<RootStackParamList>();
 
 export default function RootStack() {
+  const { theme } = useTheme();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -38,8 +40,11 @@ export default function RootStack() {
             component={PrivateRoutes}
             options={{
               headerShown: false,
-              headerStyle: { shadowColor: '#FFFFFF' },
+              headerStyle: { shadowColor: theme.MAIN },
               headerTitleStyle: { fontSize: 20, fontWeight: 'bold' },
+              cardStyle: {
+                backgroundColor: theme.MAIN, // Cor de fundo da tela
+              },
             }}
           />
         ) : (
@@ -48,7 +53,7 @@ export default function RootStack() {
             component={PublicRoutes}
             options={{
               headerShown: false,
-              headerStyle: { shadowColor: '#FFFFFF' },
+              headerStyle: { shadowColor: theme.MAIN },
               headerTitleStyle: { fontSize: 20, fontWeight: 'bold' },
             }}
           />

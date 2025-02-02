@@ -1,7 +1,9 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
-import { styles } from './ListCard.style';
+import { createStyles } from './ListCard.style';
+
+import { useTheme } from '~/theme/themeContext';
 
 export type ListCardProps = {
   Description: string;
@@ -10,6 +12,8 @@ export type ListCardProps = {
 };
 
 export default function ListCard(props: ListCardProps) {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   return (
     <TouchableOpacity
       style={[styles.Container, { backgroundColor: props.Color }]}

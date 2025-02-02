@@ -2,7 +2,9 @@ import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, Animated } from 'react-native';
 
-import { styles } from './Checkbox.style';
+import { createStyles } from './Checkbox.style';
+
+import { useTheme } from '~/theme/themeContext';
 
 type CustomCheckboxProps = {
   label?: string;
@@ -11,6 +13,8 @@ type CustomCheckboxProps = {
 };
 
 const CustomCheckbox = ({ label, value, onChange }: CustomCheckboxProps) => {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   const backgroundColor = new Animated.Value(value ? 1 : 0);
 
   Animated.timing(backgroundColor, {
@@ -21,13 +25,13 @@ const CustomCheckbox = ({ label, value, onChange }: CustomCheckboxProps) => {
 
   const animatedBackgroundColor = backgroundColor.interpolate({
     inputRange: [0, 1],
-    outputRange: ['#FFFFFF', '#59BF69'],
+    outputRange: [theme.GRAY_300, '#59BF69'],
   });
 
   return (
     <TouchableOpacity style={styles.checkboxContainer} onPress={() => onChange(!value)}>
       <Animated.View style={[styles.checkbox, { backgroundColor: animatedBackgroundColor }]}>
-        <Ionicons name="checkmark" size={20} color={value ? '#FFFFFF' : '#E0E4EA'} />
+        <Ionicons name="checkmark" size={20} color={theme.MAIN} />
       </Animated.View>
       {label && <Text style={styles.label}>{label}</Text>}
     </TouchableOpacity>

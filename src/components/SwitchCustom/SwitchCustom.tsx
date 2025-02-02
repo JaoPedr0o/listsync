@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { TouchableOpacity, Animated } from 'react-native';
 
-import { styles } from './SwitchCustom.style';
+import { createStyles } from './SwitchCustom.style';
+
+import { useTheme } from '~/theme/themeContext';
 
 interface CustomSwitchProps {
   isActive?: boolean;
@@ -9,6 +11,8 @@ interface CustomSwitchProps {
 }
 
 const CustomSwitch: React.FC<CustomSwitchProps> = ({ isActive = false, onToggle }) => {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   const [active, setActive] = useState(isActive);
   const toggleAnimation = useRef(new Animated.Value(isActive ? 1 : 0)).current; // Usando useRef para a animação
 
@@ -41,7 +45,7 @@ const CustomSwitch: React.FC<CustomSwitchProps> = ({ isActive = false, onToggle 
 
   const interpolatedColor = toggleAnimation.interpolate({
     inputRange: [0, 1],
-    outputRange: ['#878787', '#59BF69'],
+    outputRange: [theme.GRAY_400, '#59BF69'],
   });
 
   const switchPosition = toggleAnimation.interpolate({

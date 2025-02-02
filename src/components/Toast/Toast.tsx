@@ -21,12 +21,12 @@ export const toastConfig = {
         fontSize: 14,
         fontWeight: '900',
         flexWrap: 'wrap',
-        color: 'black',
+        color: '#000000',
       }}
       text2Style={{
         fontSize: 12,
         flexWrap: 'wrap',
-        color: 'black',
+        color: '#000000',
       }}
     />
   ),
@@ -47,12 +47,12 @@ export const toastConfig = {
         fontSize: 14,
         fontWeight: '900',
         flexWrap: 'wrap',
-        color: 'black',
+        color: '#000000',
       }}
       text2Style={{
         fontSize: 12,
         flexWrap: 'wrap',
-        color: 'black',
+        color: '#000000',
       }}
     />
   ),
@@ -73,12 +73,12 @@ export const toastConfig = {
         fontSize: 14,
         fontWeight: '900',
         flexWrap: 'wrap',
-        color: 'black',
+        color: '#000000',
       }}
       text2Style={{
         fontSize: 12,
         flexWrap: 'wrap',
-        color: 'black',
+        color: '#000000',
       }}
     />
   ),

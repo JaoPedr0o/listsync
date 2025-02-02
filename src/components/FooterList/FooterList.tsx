@@ -3,9 +3,11 @@ import { FontAwesome } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
-import { styles } from './FooterList.style';
+import { createStyles } from './FooterList.style';
 import { Button } from '../Button/Button';
 import CustomSwitch from '../SwitchCustom/SwitchCustom';
+
+import { useTheme } from '~/theme/themeContext';
 
 type FooterListProps = {
   items?: number;
@@ -20,6 +22,8 @@ type FooterListProps = {
 };
 
 export default function FooterList(props: FooterListProps) {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   const [isEnable, setIsEnable] = useState(props.enable);
   
   const handleToggle = () => {
@@ -50,13 +54,13 @@ export default function FooterList(props: FooterListProps) {
           </View>
           <View style={styles.WrapperButtons}>
             <TouchableOpacity onPress={props.onDelete} style={styles.ActionDeleteButton}>
-              <FontAwesome name="trash" size={20} color="#FFFFFF" />
+              <FontAwesome name="trash" size={20} color={theme.MAIN} />
             </TouchableOpacity>
             <TouchableOpacity onPress={props.onCopyList} style={styles.ActionButton}>
-              <FontAwesome name="copy" size={20} color="#FFFFFF" />
+              <FontAwesome name="copy" size={20} color={theme.MAIN} />
             </TouchableOpacity>
             <TouchableOpacity onPress={props.onShareList} style={styles.ActionButton}>
-              <FontAwesome name="share-alt" size={20} color="#FFFFFF" />
+              <FontAwesome name="share-alt" size={20} color={theme.MAIN} />
             </TouchableOpacity>
           </View>
           <CustomSwitch isActive={isEnable} onToggle={handleToggle} />

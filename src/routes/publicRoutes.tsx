@@ -5,6 +5,7 @@ import SvgLogoSmall from '~/assets/LogoSmall';
 import Register from '~/screens/Login/login';
 import PasswordRecoveryScreen from '~/screens/Password/password';
 import Login from '~/screens/Register/register';
+import { useTheme } from '~/theme/themeContext';
 
 export type RootStackParamList = {
   DrawerNavigator: undefined;
@@ -19,6 +20,7 @@ export type RootStackParamList = {
 const Stack = createStackNavigator<RootStackParamList>();
 
 export default function PublicRoutes() {
+  const { theme } = useTheme();
   return (
     <Stack.Navigator initialRouteName="Register">
       <Stack.Screen
@@ -26,7 +28,7 @@ export default function PublicRoutes() {
         component={Login}
         options={{
           headerShown: false,
-          headerStyle: { shadowColor: '#FFFFFF' },
+          headerStyle: { shadowColor: theme.MAIN },
           headerTitleStyle: { fontSize: 20, fontWeight: 'bold' },
         }}
       />
@@ -35,7 +37,7 @@ export default function PublicRoutes() {
         component={Register}
         options={{
           headerShown: false,
-          headerStyle: { shadowColor: '#FFFFFF' },
+          headerStyle: { shadowColor: theme.MAIN },
           headerTitleStyle: { fontSize: 20, fontWeight: 'bold' },
         }}
       />
@@ -45,7 +47,7 @@ export default function PublicRoutes() {
         options={{
           title: 'Recuperar Senha',
           headerShown: true,
-          headerStyle: { shadowColor: '#FFFFFF' },
+          headerStyle: { shadowColor: theme.MAIN },
           headerTitleStyle: { fontSize: 20, fontWeight: 'bold' },
           headerRight: () => <SvgLogoSmall />,
           headerRightContainerStyle: { padding: 15 },

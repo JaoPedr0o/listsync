@@ -15,7 +15,7 @@ import {
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
-import { styles } from './item.style';
+import { createStyles } from './item.style';
 import { List, ListItem } from './item.types';
 import ItemSkeleton from './itemSkeletom';
 
@@ -33,6 +33,7 @@ import {
   getItemForEdit,
   updateSelectedItens,
 } from '~/services/functions';
+import { useTheme } from '~/theme/themeContext';
 import { generateUnicId } from '~/utils/functions/generateUnicId';
 import { shareList } from '~/utils/functions/shareList';
 import { isValidItemName, isValidQuantity } from '~/utils/functions/validations';
@@ -40,6 +41,8 @@ import { isValidItemName, isValidQuantity } from '~/utils/functions/validations'
 export default function Item({ route }: { route: any }) {
   const navigation = useNavigation();
   const { listId } = route.params;
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
 
   // Informações gerais do usuário e lista
   const [userData, setUserData] = useState<any>(null);
@@ -319,7 +322,7 @@ export default function Item({ route }: { route: any }) {
             value={itemRef}
             onChangeText={setItemRef}
             placeholder="Item"
-            placeholderTextColor="#878787"
+            placeholderTextColor={theme.GRAY_400}
             keyboardType="default"
           />
           <View style={styles.WrapperType}>
@@ -328,16 +331,16 @@ export default function Item({ route }: { route: any }) {
               value={quantity}
               onChangeText={setQuantity}
               placeholder="0"
-              placeholderTextColor="#878787"
+              placeholderTextColor={theme.GRAY_400}
               keyboardType="decimal-pad"
             />
             <TouchableOpacity style={styles.ListTypeButton} onPress={toggleItemType}>
               {editModalVisible === false && <Text style={styles.TypeIndicator}>{type}</Text>}
-              <FontAwesome name="gears" size={12} color="#FFFFFF" />
+              <FontAwesome name="gears" size={12} color={theme.MAIN} />
             </TouchableOpacity>
           </View>
           <TouchableOpacity style={styles.ListAddButton} onPress={handleAddItem}>
-            <FontAwesome name="plus-circle" size={20} color="#FFFFFF" />
+            <FontAwesome name="plus-circle" size={20} color={theme.MAIN} />
           </TouchableOpacity>
         </View>
         <SafeAreaProvider>
@@ -376,7 +379,7 @@ export default function Item({ route }: { route: any }) {
                     style={styles.CloseModalButton}
                     hitSlop={25}
                     onPress={() => closeModal()}>
-                    <FontAwesome name="close" size={16} color="#000000" />
+                    <FontAwesome name="close" size={16} color={theme.SEC} />
                   </TouchableOpacity>
                 </View>
                 <View style={styles.AddItemContainer}>
@@ -385,7 +388,7 @@ export default function Item({ route }: { route: any }) {
                     value={itemRefEdit}
                     onChangeText={setItemRefEdit}
                     placeholder="Item"
-                    placeholderTextColor="#878787"
+                    placeholderTextColor={theme.GRAY_400}
                     keyboardType="default"
                   />
                   <View style={styles.WrapperType}>
@@ -394,12 +397,12 @@ export default function Item({ route }: { route: any }) {
                       value={quantityEdit}
                       onChangeText={setQuantityEdit}
                       placeholder="0"
-                      placeholderTextColor="#878787"
+                      placeholderTextColor={theme.GRAY_400}
                       keyboardType="decimal-pad"
                     />
                     <TouchableOpacity style={styles.ListTypeButton} onPress={toggleItemType}>
                       <Text style={styles.TypeIndicator}>{type}</Text>
-                      <FontAwesome name="gears" size={12} color="#FFFFFF" />
+                      <FontAwesome name="gears" size={12} color={theme.MAIN} />
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -407,12 +410,12 @@ export default function Item({ route }: { route: any }) {
                   <TouchableOpacity
                     style={styles.EditListDeleteButton}
                     onPress={() => handleDeleteItem(editItemId)}>
-                    <FontAwesome name="trash" size={20} color="#FFFFFF" />
+                    <FontAwesome name="trash" size={20} color={theme.MAIN} />
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.EditItemButton}
                     onPress={() => handleUpdateItem(listId, editItemId)}>
-                    <FontAwesome name="check" size={20} color="#FFFFFF" />
+                    <FontAwesome name="check" size={20} color={theme.MAIN} />
                   </TouchableOpacity>
                 </View>
               </View>

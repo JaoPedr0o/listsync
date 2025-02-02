@@ -17,7 +17,7 @@ import {
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
-import { styles } from './home.style';
+import { createStyles } from './home.style';
 
 import SvgEmptyList from '~/assets/EmptyList';
 import FooterList from '~/components/FooterList/FooterList';
@@ -26,15 +26,18 @@ import ListCard from '~/components/ListCard/ListCard';
 import { toastConfig } from '~/components/Toast/Toast';
 import { auth, db } from '~/services/firebase';
 import { getUserData } from '~/services/functions';
+import { useTheme } from '~/theme/themeContext';
 import { generateUnicId } from '~/utils/functions/generateUnicId';
 
 export default function Home({ navigation }: { navigation: any }) {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   const textInputRef = useRef<TextInput>(null);
   const [userData, setUserData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [listRef, setlistRef] = useState('');
-  const [listInputColor, setListInputColor] = useState('#E0E4EA');
+  const [listInputColor, setListInputColor] = useState(theme.GRAY_300);
 
   const loadData = async () => {
     const user = auth.currentUser;
@@ -67,7 +70,7 @@ export default function Home({ navigation }: { navigation: any }) {
 
   useEffect(() => {
     loadData();
-    NavigationBar.setBackgroundColorAsync('#FFFFFF');
+    NavigationBar.setBackgroundColorAsync(theme.MAIN);
   }, []);
 
   useFocusEffect(
@@ -116,7 +119,7 @@ export default function Home({ navigation }: { navigation: any }) {
           setLoading(false);
           setlistRef('');
           setModalVisible(false);
-          setListInputColor('#E0E4EA');
+          setListInputColor(theme.GRAY_300);
         } else {
           Toast.show({
             type: 'info',
@@ -148,7 +151,7 @@ export default function Home({ navigation }: { navigation: any }) {
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#000" />
+        <ActivityIndicator size="large" color={theme.SEC} />
       </View>
     );
   }
@@ -208,7 +211,7 @@ export default function Home({ navigation }: { navigation: any }) {
                         autoFocus
                       />
                       <TouchableOpacity style={styles.ListAddButton} onPress={addToLists}>
-                        <FontAwesome name="plus-circle" size={20} color="#FFFFFF" />
+                        <FontAwesome name="plus-circle" size={20} color={theme.MAIN} />
                       </TouchableOpacity>
                     </View>
                     <View style={styles.ColorsWrapper}>

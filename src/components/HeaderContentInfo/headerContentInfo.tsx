@@ -1,7 +1,9 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-import { styles } from './headerContentInfo.style';
+import { createStyles } from './headerContentInfo.style';
+
+import { useTheme } from '~/theme/themeContext';
 
 type headerContentInfoProps = {
   UserName: string;
@@ -9,6 +11,8 @@ type headerContentInfoProps = {
 };
 
 export default function HeaderContentInfo(props: headerContentInfoProps) {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   return (
     <View style={styles.Container}>
       <Text style={styles.TitleTextBold}>Olá!</Text>

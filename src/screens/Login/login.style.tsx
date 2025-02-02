@@ -13,20 +13,20 @@ export const styles = StyleSheet.create({
   LargeTextBlack: {
     fontSize: 18,
     fontFamily: 'Righteous_400Regular',
-    color: '#000',
+    color: '#000000',
   },
 
   SmallTextBlack: {
     fontSize: 14,
     fontFamily: 'Righteous_400Regular',
-    color: '#000',
+    color: '#000000',
     textAlign: 'justify',
   },
 
   CenteredSmallTextBlack: {
     fontSize: 14,
     fontFamily: 'Righteous_400Regular',
-    color: '#000',
+    color: '#000000',
     textAlign: 'center',
   },
 
@@ -65,7 +65,7 @@ export const styles = StyleSheet.create({
 
   LoginInput: {
     borderBottomWidth: 1,
-    borderBottomColor: '#000',
+    borderBottomColor: '#000000',
     width: '100%',
     fontSize: 14,
     fontFamily: 'Righteous_400Regular',
@@ -73,5 +73,9 @@ export const styles = StyleSheet.create({
 
   ActiveIndicator: {
     marginTop: 50,
+  },
+
+  LoginTextWrapper: {
+    width: '100%',
   },
 });

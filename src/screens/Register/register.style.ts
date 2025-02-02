@@ -13,13 +13,13 @@ export const styles = StyleSheet.create({
   LargeTextBlack: {
     fontSize: 18,
     fontFamily: 'Righteous_400Regular',
-    color: '#000',
+    color: '#121212',
   },
 
   SmallTextBlack: {
     fontSize: 14,
     fontFamily: 'Righteous_400Regular',
-    color: '#000',
+    color: '#121212',
     textAlign: 'justify',
   },
 
@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
 
   LoginInput: {
     borderBottomWidth: 1,
-    borderBottomColor: '#000',
+    borderBottomColor: '#121212',
     width: '100%',
     fontSize: 14,
     fontFamily: 'Righteous_400Regular',

@@ -217,3 +217,32 @@ export const getItemForEdit = async (listId: string, itemId: string) => {
 
   return item;
 };
+
+export const getUserDarkModePreference = async () => {
+  const user = auth.currentUser;
+  if (!user) return false;
+
+  const userDocRef = doc(db, 'users', user.uid);
+  const userDocSnap = await getDoc(userDocRef);
+
+  if (userDocSnap.exists()) {
+    return userDocSnap.data().darkTheme;
+  } else {
+    return false;
+  }
+};
+
+export const toggleUserDarkModePreference = async (newMode: boolean) => {
+  const user = auth.currentUser;
+  if (!user) return false;
+
+  const userDocRef = doc(db, 'users', user.uid);
+
+  try {
+    await updateDoc(userDocRef, { darkTheme: newMode });
+    return true;
+  } catch (error) {
+    console.error('Erro ao tentar atualizar o tema:', error);
+    return false;
+  }
+};

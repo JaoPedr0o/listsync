@@ -1,25 +1,28 @@
 import { StyleSheet } from 'react-native';
 
-export const styles = StyleSheet.create({
-  Container: {
-    height: 75,
-  },
+import { ThemeType } from '~/theme/global.style';
 
-  TextBold: {
-    fontSize: 20,
-    color: 'black',
-    fontFamily: 'Righteous_400Regular',
-  },
+export const createStyles = (theme: ThemeType) =>
+  StyleSheet.create({
+    Container: {
+      height: 75,
+    },
 
-  TitleTextBold: {
-    fontSize: 20,
-    color: 'black',
-    fontFamily: 'Righteous_400Regular',
-  },
+    TextBold: {
+      fontSize: 20,
+      color: theme.SEC,
+      fontFamily: 'Righteous_400Regular',
+    },
 
-  GrayTextBold: {
-    fontSize: 14,
-    color: '#878787',
-    fontFamily: 'Righteous_400Regular',
-  },
-});
+    TitleTextBold: {
+      fontSize: 20,
+      color: theme.SEC,
+      fontFamily: 'Righteous_400Regular',
+    },
+
+    GrayTextBold: {
+      fontSize: 14,
+      color: theme.GRAY_400,
+      fontFamily: 'Righteous_400Regular',
+    },
+  });

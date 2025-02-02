@@ -77,6 +77,7 @@ export default function Register({ navigation }: { navigation: any }) {
           conections: [],
           lists: [],
           profileImg: '',
+          darkTheme: false,
         });
 
         setLoading(false);
@@ -115,19 +116,21 @@ export default function Register({ navigation }: { navigation: any }) {
           Coloque seus dados e comece agora mesmo a facilitar o seu dia a dia com essa ferramenta
           simples e poderosa.{' '}
         </Text>
-        {loading && <ActivityIndicator style={styles.ActiveIndicator} size="large" color="#000" />}
+        {loading && (
+          <ActivityIndicator style={styles.ActiveIndicator} size="large" color="#121212" />
+        )}
       </View>
       <View style={styles.FormInput}>
         <TextInput
           style={styles.LoginInput}
-          placeholderTextColor="#000"
+          placeholderTextColor="#121212"
           onChangeText={setName}
           value={name}
           placeholder="Seu nome:"
         />
         <TextInput
           style={styles.LoginInput}
-          placeholderTextColor="#000"
+          placeholderTextColor="#121212"
           onChangeText={setEmail}
           value={email}
           placeholder="E-mail:"
@@ -135,7 +138,7 @@ export default function Register({ navigation }: { navigation: any }) {
         />
         <TextInput
           style={styles.LoginInput}
-          placeholderTextColor="#000"
+          placeholderTextColor="#121212"
           onChangeText={setPassword}
           value={password}
           placeholder="Senha:"
@@ -143,7 +146,7 @@ export default function Register({ navigation }: { navigation: any }) {
         />
         <TextInput
           style={styles.LoginInput}
-          placeholderTextColor="#000"
+          placeholderTextColor="#121212"
           onChangeText={setConfirmPassword}
           value={confirmPassword}
           placeholder="Confirme sua Senha:"
